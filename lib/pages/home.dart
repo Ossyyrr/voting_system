@@ -42,20 +42,36 @@ class _HomePageState extends State<HomePage> {
         ));
   }
 
-  ListTile _bandTile(Band band) {
-    return ListTile(
-      leading: CircleAvatar(
-        child: Text(band.name.substring(0, 2)),
-        backgroundColor: Colors.blue[100],
-      ),
-      title: Text(band.name),
-      trailing: Text(
-        band.votes.toString(),
-        style: const TextStyle(fontSize: 20),
-      ),
-      onTap: () {
-        print(band.name);
+  Widget _bandTile(Band band) {
+    return Dismissible(
+      key: Key(band.id),
+      direction: DismissDirection.startToEnd,
+      onDismissed: (direction) {
+        print(direction);
       },
+      background: Container(
+        color: Colors.red,
+        alignment: Alignment.centerLeft,
+        padding: const EdgeInsets.all(12),
+        child: const Text(
+          'Borrar',
+          style: TextStyle(color: Colors.white, fontSize: 12),
+        ),
+      ),
+      child: ListTile(
+        leading: CircleAvatar(
+          child: Text(band.name.substring(0, 2)),
+          backgroundColor: Colors.blue[100],
+        ),
+        title: Text(band.name),
+        trailing: Text(
+          band.votes.toString(),
+          style: const TextStyle(fontSize: 20),
+        ),
+        onTap: () {
+          print(band.name);
+        },
+      ),
     );
   }
 
