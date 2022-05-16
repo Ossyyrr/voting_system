@@ -10,7 +10,7 @@ enum ServerStatus {
 }
 
 class SocketService with ChangeNotifier {
-  final ServerStatus _serverStatus = ServerStatus.Connecting;
+  ServerStatus _serverStatus = ServerStatus.Connecting;
   get serverStatus => _serverStatus;
   SocketService() {
     initConfig();
@@ -31,12 +31,17 @@ class SocketService with ChangeNotifier {
     socket.onConnect((_) {
       print('connect');
       socket.emit('mensaje', 'test desde flutter');
+      _serverStatus = ServerStatus.Online;
+      notifyListeners();
+    });
+
+    socket.onDisconnect((_) {
+      print('disconnect');
+      _serverStatus = ServerStatus.Offline;
+      notifyListeners();
     });
 
     //socket.on('event', (data) => print(data));
-    socket.onDisconnect((_) {
-      print('disconnect');
-    });
     //socket.on('fromServer', (_) => print(_));
   }
 }
