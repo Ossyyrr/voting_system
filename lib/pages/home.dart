@@ -74,6 +74,9 @@ class _HomePageState extends State<HomePage> {
       direction: DismissDirection.startToEnd,
       onDismissed: (direction) {
         print(direction);
+
+        final socketService = Provider.of<SocketService>(context, listen: false);
+        socketService.emit('delete-band', {'id': band.id});
       },
       background: Container(
         color: Colors.red,
@@ -145,11 +148,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   void addBandToList(String name) {
-    print(name);
     if (name.length > 1) {
-      bands.add(Band(id: DateTime.now().toString(), name: name, votes: 0));
+      final socketService = Provider.of<SocketService>(context, listen: false);
+      socketService.emit('add-band', {'name': name});
     }
-    setState(() {});
     Navigator.pop(context);
   }
 }
