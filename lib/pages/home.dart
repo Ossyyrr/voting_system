@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:voting_system/models/band.dart';
 import 'package:voting_system/services/socket_service.dart';
+import 'package:voting_system/widgets/graph.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,12 +20,21 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     final socketService = Provider.of<SocketService>(context, listen: false);
-    socketService.socket.on('active-bands', (payload) {
+    socketService.socket.on('active-bands', _handleActiveBands);
+    /*
+      socketService.socket.on('active-bands', (payload) {
       print('active-bands');
       bands = (payload as List).map((band) => Band.fromMap(band)).toList();
       setState(() {});
     });
+    */
     super.initState();
+  }
+
+  _handleActiveBands(dynamic payload) {
+    print('active-bands');
+    bands = (payload as List).map((band) => Band.fromMap(band)).toList();
+    setState(() {});
   }
 
   @override
@@ -49,15 +59,26 @@ class _HomePageState extends State<HomePage> {
                   : Icon(Icons.offline_bolt, color: Colors.red[300]),
             )
           ],
+          centerTitle: true,
           title: const Text(
-            'BandNames',
+            'Votación',
             style: TextStyle(color: Colors.black87),
           ),
           backgroundColor: Colors.white,
         ),
-        body: ListView.builder(
-          itemCount: bands.length,
-          itemBuilder: (context, index) => _bandTile(bands[index]),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0),
+              child: Graph(bands: bands),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: bands.length,
+                itemBuilder: (context, index) => _bandTile(bands[index]),
+              ),
+            ),
+          ],
         ),
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add),
@@ -72,12 +93,7 @@ class _HomePageState extends State<HomePage> {
     return Dismissible(
       key: Key(band.id),
       direction: DismissDirection.startToEnd,
-      onDismissed: (direction) {
-        print(direction);
-
-        final socketService = Provider.of<SocketService>(context, listen: false);
-        socketService.emit('delete-band', {'id': band.id});
-      },
+      onDismissed: (_) => socketService.emit('delete-band', {'id': band.id}),
       background: Container(
         color: Colors.red,
         alignment: Alignment.centerLeft,
@@ -97,10 +113,7 @@ class _HomePageState extends State<HomePage> {
           band.votes.toString(),
           style: const TextStyle(fontSize: 20),
         ),
-        onTap: () {
-          print(band.name);
-          socketService.emit('vote-band', {'id': band.id});
-        },
+        onTap: () => socketService.emit('vote-band', {'id': band.id}),
       ),
     );
   }
@@ -111,8 +124,8 @@ class _HomePageState extends State<HomePage> {
     if (Platform.isAndroid) {
       return showDialog(
           context: context,
-          builder: (context) => AlertDialog(
-                title: const Text('New band name'),
+          builder: (_) => AlertDialog(
+                title: const Text('Nueva votación'),
                 content: TextField(
                   controller: textController,
                 ),
@@ -128,7 +141,7 @@ class _HomePageState extends State<HomePage> {
     showCupertinoDialog(
         context: context,
         builder: (_) => CupertinoAlertDialog(
-              title: const Text('New band name'),
+              title: const Text('Nueva votación'),
               content: CupertinoTextField(
                 controller: textController,
               ),
