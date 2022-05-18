@@ -39,6 +39,10 @@ class WelcomePage extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
+                  final socketService = Provider.of<SocketService>(context, listen: false);
+
+                  socketService.initConfig('no-sala');
+
                   Navigator.pushNamed(context, 'create');
                 },
                 child: const Text('CREAR SALA'),
