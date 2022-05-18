@@ -16,27 +16,30 @@ class Graph extends StatelessWidget {
       dataMap.putIfAbsent(band.name, () => band.votes.toDouble());
     }
 
-    return PieChart(
-      chartType: ChartType.ring,
-      dataMap: dataMap,
-      chartRadius: 200,
-      ringStrokeWidth: 14,
-      legendOptions: const LegendOptions(
-        legendPosition: LegendPosition.right,
-        legendTextStyle: TextStyle(
-          color: Colors.black87,
-        ),
-      ),
-      baseChartColor: Colors.grey[50]!.withOpacity(0.15),
-      chartValuesOptions: const ChartValuesOptions(
-        showChartValuesInPercentage: true,
-        chartValueStyle: TextStyle(
-          color: Colors.black87,
-          fontWeight: FontWeight.bold,
-          fontSize: 12,
-        ),
-        showChartValueBackground: false,
-      ),
-    );
+    return bands.isEmpty
+        ? const SizedBox()
+        : PieChart(
+            chartType: ChartType.ring,
+            dataMap: dataMap,
+            chartRadius: 200,
+            ringStrokeWidth: 14,
+            animationDuration: const Duration(seconds: 1),
+            legendOptions: const LegendOptions(
+              legendPosition: LegendPosition.right,
+              legendTextStyle: TextStyle(
+                color: Colors.black87,
+              ),
+            ),
+            baseChartColor: Colors.grey[50]!.withOpacity(0.15),
+            chartValuesOptions: const ChartValuesOptions(
+              showChartValuesInPercentage: true,
+              chartValueStyle: TextStyle(
+                color: Colors.black87,
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+              ),
+              showChartValueBackground: false,
+            ),
+          );
   }
 }

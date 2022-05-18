@@ -18,19 +18,25 @@ class SocketService with ChangeNotifier {
   Function get emit => _socket.emit;
 
   SocketService() {
-    initConfig();
+    // initConfig();
   }
 
-  void initConfig() async {
+  void initConfig(String sala) async {
     // Dart client
+    // TODO URL
+    // String socketUrl = 'https://voting-system-ossyyrr.herokuapp.com/';
     String socketUrl = Platform.isAndroid ? 'http://192.168.1.134:3000' : 'http://localhost:3000';
     print('init config');
 
     _socket = IO.io(
-        'http://192.168.1.134:3000',
+        socketUrl,
         IO.OptionBuilder()
             .setTransports(['websocket']) // for Flutter or Dart VM
             .enableAutoConnect() // disable auto-connection
+            .setExtraHeaders({
+              'foo': 'bar',
+              'sala': sala,
+            })
             .build());
 
     _socket.onConnect((_) {
