@@ -22,11 +22,30 @@ class WelcomePage extends StatelessWidget {
               ),
 
               MaterialButton(
-                onPressed: () {
-                  final socketService = Provider.of<SocketService>(context, listen: false);
+                onPressed: () async {
                   print(textController.text);
+                  final socketService = Provider.of<SocketService>(context, listen: false);
                   socketService.initConfig(textController.text);
-                  Navigator.pushNamed(context, 'home');
+
+                  if (socketService.existRoom) {
+                    Navigator.pushNamed(context, 'home');
+                  } else {
+                    showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                              title: const Text('Nueva votación'),
+                              content: TextField(
+                                controller: textController,
+                              ),
+                              actions: [
+                                MaterialButton(
+                                  onPressed: () {},
+                                  child: const Text('add'),
+                                  textColor: Colors.blue,
+                                ),
+                              ],
+                            ));
+                  }
                 },
                 child: const Text('ENTRAR'),
                 textColor: Colors.blue,
@@ -37,7 +56,9 @@ class WelcomePage extends StatelessWidget {
                 decoration: BoxDecoration(color: Colors.grey[300]),
               ),
               ElevatedButton(
-                onPressed: () => Navigator.pushNamed(context, 'create'),
+                onPressed: () {
+                  Navigator.pushNamed(context, 'create');
+                },
                 child: const Text('CREAR SALA'),
               )
             ],

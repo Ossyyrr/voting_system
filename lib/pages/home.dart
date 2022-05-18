@@ -1,10 +1,8 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:voting_system/models/band.dart';
 import 'package:voting_system/services/socket_service.dart';
+import 'package:voting_system/widgets/dialog_platform.dart';
 import 'package:voting_system/widgets/graph.dart';
 
 class HomePage extends StatefulWidget {
@@ -120,44 +118,11 @@ class _HomePageState extends State<HomePage> {
 
   addNewBand() {
     final textController = TextEditingController();
-
-    if (Platform.isAndroid) {
-      return showDialog(
-          context: context,
-          builder: (_) => AlertDialog(
-                title: const Text('Nueva votación'),
-                content: TextField(
-                  controller: textController,
-                ),
-                actions: [
-                  MaterialButton(
-                    onPressed: () => addBandToList(textController.text),
-                    child: const Text('add'),
-                    textColor: Colors.blue,
-                  ),
-                ],
-              ));
-    }
-    showCupertinoDialog(
-        context: context,
-        builder: (_) => CupertinoAlertDialog(
-              title: const Text('Nueva votación'),
-              content: CupertinoTextField(
-                controller: textController,
-              ),
-              actions: [
-                CupertinoDialogAction(
-                  onPressed: () => addBandToList(textController.text),
-                  isDefaultAction: true,
-                  child: const Text('add'),
-                ),
-                CupertinoDialogAction(
-                  onPressed: () => Navigator.pop(context),
-                  isDestructiveAction: true,
-                  child: const Text('dismiss'),
-                ),
-              ],
-            ));
+    DialogPlatfom.showDialogPlatform(
+      context: context,
+      textController: textController,
+      onPressed: () => addBandToList(textController.text),
+    );
   }
 
   void addBandToList(String name) {

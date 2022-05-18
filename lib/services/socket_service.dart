@@ -11,17 +11,20 @@ enum ServerStatus {
 
 class SocketService with ChangeNotifier {
   ServerStatus _serverStatus = ServerStatus.Connecting;
+  // TODO _existRoom
+  bool _existRoom = true;
   ServerStatus get serverStatus => _serverStatus;
   late IO.Socket _socket;
 
   IO.Socket get socket => _socket;
   Function get emit => _socket.emit;
+  bool get existRoom => _existRoom;
 
   SocketService() {
     // initConfig();
   }
 
-  void initConfig(String sala) async {
+  void initConfig(String sala) {
     // Dart client
     // TODO URL
     // String socketUrl = 'https://voting-system-ossyyrr.herokuapp.com/';
@@ -41,7 +44,7 @@ class SocketService with ChangeNotifier {
 
     _socket.onConnect((_) {
       print('connect');
-      _socket.emit('mensaje', 'test desde flutter');
+      _socket.emit('mensaje', 'cliente de flutter conectado');
       _serverStatus = ServerStatus.Online;
       notifyListeners();
     });
@@ -52,10 +55,16 @@ class SocketService with ChangeNotifier {
       notifyListeners();
     });
 
-    _socket.on('emitir-mensaje', (payload) {
-      print('NUEVO MENSAJE');
+    _socket.on('exist-room', (payload) {
+      print('exist-room');
       print(payload);
+      _existRoom = payload['exist-room'];
+      notifyListeners();
+      print(_existRoom);
     });
+
+    print('_existRoom');
+    print(_existRoom);
 
     //socket.on('event', (data) => print(data));
     //socket.on('fromServer', (_) => print(_));
