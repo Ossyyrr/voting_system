@@ -11,20 +11,18 @@ enum ServerStatus {
 
 class SocketService with ChangeNotifier {
   ServerStatus _serverStatus = ServerStatus.Connecting;
-  // TODO _existRoom
-  bool _existRoom = true;
   ServerStatus get serverStatus => _serverStatus;
   late IO.Socket _socket;
 
   IO.Socket get socket => _socket;
   Function get emit => _socket.emit;
-  bool get existRoom => _existRoom;
 
   SocketService() {
     // initConfig();
   }
 
   void initConfig(String sala) {
+    print('INIT CONFIG, SALA: ' + sala);
     // Dart client
     // TODO URL
     // String socketUrl = 'https://voting-system-ossyyrr.herokuapp.com/';
@@ -35,36 +33,29 @@ class SocketService with ChangeNotifier {
         socketUrl,
         IO.OptionBuilder()
             .setTransports(['websocket']) // for Flutter or Dart VM
-            .enableAutoConnect() // disable auto-connection
+            .disableAutoConnect() // disable auto-connection
+            .enableForceNew()
             .setExtraHeaders({
-              'foo': 'bar',
               'sala': sala,
             })
             .build());
 
+    _socket
+      ..disconnect()
+      ..connect();
+
     _socket.onConnect((_) {
       print('connect');
-      _socket.emit('mensaje', 'cliente de flutter conectado');
+      //  _socket.emit('connect', 'cliente de flutter conectado');
       _serverStatus = ServerStatus.Online;
       notifyListeners();
     });
 
     _socket.onDisconnect((_) {
-      print('disconnect');
+      print('disconnect flutter');
       _serverStatus = ServerStatus.Offline;
       notifyListeners();
     });
-
-    _socket.on('exist-room', (payload) {
-      print('exist-room');
-      print(payload);
-      _existRoom = payload['exist-room'];
-      notifyListeners();
-      print(_existRoom);
-    });
-
-    print('_existRoom');
-    print(_existRoom);
 
     //socket.on('event', (data) => print(data));
     //socket.on('fromServer', (_) => print(_));

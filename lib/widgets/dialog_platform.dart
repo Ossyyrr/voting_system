@@ -4,14 +4,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DialogPlatfom extends StatelessWidget {
-  const DialogPlatfom({Key? key, required this.textController, required this.onPressed}) : super(key: key);
+  const DialogPlatfom({Key? key, required this.textController, required this.onPressed, required this.title})
+      : super(key: key);
   final TextEditingController textController;
   final void Function()? onPressed;
+  final String title;
   @override
   Widget build(BuildContext context) {
     return Platform.isAndroid
         ? AlertDialog(
-            title: const Text('Nueva votación'),
+            title: Text(title),
             content: TextField(
               controller: textController,
             ),
@@ -24,7 +26,7 @@ class DialogPlatfom extends StatelessWidget {
             ],
           )
         : CupertinoAlertDialog(
-            title: const Text('Nueva votación'),
+            title: Text(title),
             content: CupertinoTextField(
               controller: textController,
             ),
@@ -47,15 +49,24 @@ class DialogPlatfom extends StatelessWidget {
     required BuildContext context,
     required TextEditingController textController,
     required void Function()? onPressed,
+    required String title,
   }) {
     return Platform.isAndroid
         ? showDialog(
             context: context,
-            builder: (_) => DialogPlatfom(textController: textController, onPressed: onPressed),
+            builder: (_) => DialogPlatfom(
+              textController: textController,
+              onPressed: onPressed,
+              title: title,
+            ),
           )
         : showCupertinoDialog(
             context: context,
-            builder: (_) => DialogPlatfom(textController: textController, onPressed: onPressed),
+            builder: (_) => DialogPlatfom(
+              textController: textController,
+              onPressed: onPressed,
+              title: title,
+            ),
           );
   }
 }

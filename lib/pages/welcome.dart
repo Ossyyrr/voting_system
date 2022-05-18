@@ -23,29 +23,11 @@ class WelcomePage extends StatelessWidget {
 
               MaterialButton(
                 onPressed: () async {
-                  print(textController.text);
+                  print('TEXTO:     ' + textController.text);
                   final socketService = Provider.of<SocketService>(context, listen: false);
                   socketService.initConfig(textController.text);
 
-                  if (socketService.existRoom) {
-                    Navigator.pushNamed(context, 'home');
-                  } else {
-                    showDialog(
-                        context: context,
-                        builder: (_) => AlertDialog(
-                              title: const Text('Nueva votación'),
-                              content: TextField(
-                                controller: textController,
-                              ),
-                              actions: [
-                                MaterialButton(
-                                  onPressed: () {},
-                                  child: const Text('add'),
-                                  textColor: Colors.blue,
-                                ),
-                              ],
-                            ));
-                  }
+                  Navigator.pushNamed(context, 'home');
                 },
                 child: const Text('ENTRAR'),
                 textColor: Colors.blue,

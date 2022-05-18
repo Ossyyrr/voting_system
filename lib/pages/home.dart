@@ -17,37 +17,38 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    print('HOME PAGE');
+
     final socketService = Provider.of<SocketService>(context, listen: false);
     socketService.socket.on('active-bands', _handleActiveBands);
-    /*
-      socketService.socket.on('active-bands', (payload) {
-      print('active-bands');
-      bands = (payload as List).map((band) => Band.fromMap(band)).toList();
-      setState(() {});
-    });
-    */
+
     super.initState();
   }
 
   _handleActiveBands(dynamic payload) {
-    print('active-bands');
-    bands = (payload as List).map((band) => Band.fromMap(band)).toList();
-    setState(() {});
+    print('active-bands ****');
+    print(payload);
+    if ((payload is Map) && payload.containsKey('exist-room') && !payload['exist-room']) {
+      print('LA SALA NO EXISTE');
+    } else {
+      bands = (payload as List).map((band) => Band.fromMap(band)).toList();
+      setState(() {});
+    }
   }
 
-  @override
-  void dispose() {
-    final socketService = Provider.of<SocketService>(context, listen: false);
-    socketService.socket.off('active-bands');
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   final socketService = Provider.of<SocketService>(context, listen: false);
+  //   socketService.socket.off('active-bands');
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
     final socketService = Provider.of<SocketService>(context);
-
     return Scaffold(
         appBar: AppBar(
+          foregroundColor: Colors.blue[300],
           elevation: 1,
           actions: [
             Container(
@@ -119,10 +120,10 @@ class _HomePageState extends State<HomePage> {
   addNewBand() {
     final textController = TextEditingController();
     DialogPlatfom.showDialogPlatform(
-      context: context,
-      textController: textController,
-      onPressed: () => addBandToList(textController.text),
-    );
+        context: context,
+        textController: textController,
+        onPressed: () => addBandToList(textController.text),
+        title: 'title');
   }
 
   void addBandToList(String name) {
