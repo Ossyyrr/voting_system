@@ -5,14 +5,14 @@ import 'package:voting_system/services/socket_service.dart';
 import 'package:voting_system/widgets/dialog_platform.dart';
 import 'package:voting_system/widgets/graph.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class VotationPage extends StatefulWidget {
+  const VotationPage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<VotationPage> createState() => _VotationPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _VotationPageState extends State<VotationPage> {
   List<Band> bands = [];
 
   @override

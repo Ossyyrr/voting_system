@@ -27,7 +27,7 @@ class WelcomePage extends StatelessWidget {
                   final socketService = Provider.of<SocketService>(context, listen: false);
                   socketService.initConfig(textController.text);
 
-                  Navigator.pushNamed(context, 'home');
+                  Navigator.pushNamed(context, 'votation');
                 },
                 child: const Text('ENTRAR'),
                 textColor: Colors.blue,
