@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
-import 'package:voting_system/models/band.dart';
+import 'package:voting_system/models/Option.dart';
 
 class Graph extends StatelessWidget {
   const Graph({
     Key? key,
-    required this.bands,
+    required this.options,
   }) : super(key: key);
-  final List<Band> bands;
+  final List<Option> options;
   @override
   Widget build(BuildContext context) {
     Map<String, double> dataMap = {};
 
-    for (var band in bands) {
-      dataMap.putIfAbsent(band.name, () => band.votes.toDouble());
+    for (var option in options) {
+      dataMap.putIfAbsent(option.title, () => option.votes.toDouble());
     }
 
-    return bands.isEmpty
+    return options.isEmpty
         ? const SizedBox()
         : PieChart(
             chartType: ChartType.ring,

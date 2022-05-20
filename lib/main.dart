@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:voting_system/pages/create_room.dart';
+import 'package:voting_system/pages/home.dart';
 import 'package:voting_system/pages/votation.dart';
 import 'package:voting_system/pages/welcome.dart';
 import 'package:voting_system/services/socket_service.dart';
@@ -28,8 +29,9 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: 'welcome',
         routes: {
+          'welcome': (_) => const WelcomePage(),
+          'home': (_) => const HomePage(),
           'create': (_) => const CreateRoomPage(),
-          'welcome': (_) => WelcomePage(),
           'votation': (_) => const VotationPage(),
         },
         home: const VotationPage(),

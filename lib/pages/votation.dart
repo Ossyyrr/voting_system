@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:voting_system/models/band.dart';
+import 'package:voting_system/models/Option.dart';
 import 'package:voting_system/services/socket_service.dart';
 import 'package:voting_system/widgets/dialog_platform.dart';
 import 'package:voting_system/widgets/graph.dart';
@@ -13,25 +13,25 @@ class VotationPage extends StatefulWidget {
 }
 
 class _VotationPageState extends State<VotationPage> {
-  List<Band> bands = [];
+  List<Option> options = [];
 
   @override
   void initState() {
     print('HOME PAGE');
 
     final socketService = Provider.of<SocketService>(context, listen: false);
-    socketService.socket.on('active-bands', _handleActiveBands);
+    socketService.socket.on('active-options', _handleActiveOptions);
 
     super.initState();
   }
 
-  _handleActiveBands(dynamic payload) {
-    print('active-bands ****');
+  _handleActiveOptions(dynamic payload) {
+    print('active-options ****');
     print(payload);
     if ((payload is Map) && payload.containsKey('exist-room') && !payload['exist-room']) {
       print('LA SALA NO EXISTE');
     } else {
-      bands = (payload as List).map((band) => Band.fromMap(band)).toList();
+      options = (payload as List).map((option) => Option.fromMap(option)).toList();
       setState(() {});
     }
   }
@@ -39,7 +39,7 @@ class _VotationPageState extends State<VotationPage> {
   // @override
   // void dispose() {
   //   final socketService = Provider.of<SocketService>(context, listen: false);
-  //   socketService.socket.off('active-bands');
+  //   socketService.socket.off('active-options');
   //   super.dispose();
   // }
 
@@ -69,12 +69,12 @@ class _VotationPageState extends State<VotationPage> {
           children: [
             Padding(
               padding: const EdgeInsets.only(left: 16.0),
-              child: Graph(bands: bands),
+              child: Graph(options: options),
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: bands.length,
-                itemBuilder: (context, index) => _bandTile(bands[index]),
+                itemCount: options.length,
+                itemBuilder: (context, index) => _optionTile(options[index]),
               ),
             ),
           ],
@@ -82,17 +82,17 @@ class _VotationPageState extends State<VotationPage> {
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add),
           elevation: 1,
-          onPressed: addNewBand,
+          onPressed: addNewOption,
         ));
   }
 
-  Widget _bandTile(Band band) {
+  Widget _optionTile(Option option) {
     final socketService = Provider.of<SocketService>(context, listen: false);
 
     return Dismissible(
-      key: Key(band.id),
+      key: Key(option.id),
       direction: DismissDirection.startToEnd,
-      onDismissed: (_) => socketService.emit('delete-band', {'id': band.id}),
+      onDismissed: (_) => socketService.emit('delete-option', {'id': option.id}),
       background: Container(
         color: Colors.red,
         alignment: Alignment.centerLeft,
@@ -104,32 +104,32 @@ class _VotationPageState extends State<VotationPage> {
       ),
       child: ListTile(
         leading: CircleAvatar(
-          child: Text(band.name.substring(0, 2)),
+          child: Text(option.title.substring(0, 2)),
           backgroundColor: Colors.blue[100],
         ),
-        title: Text(band.name),
+        title: Text(option.title),
         trailing: Text(
-          band.votes.toString(),
+          option.votes.toString(),
           style: const TextStyle(fontSize: 20),
         ),
-        onTap: () => socketService.emit('vote-band', {'id': band.id}),
+        onTap: () => socketService.emit('vote-option', {'id': option.id}),
       ),
     );
   }
 
-  addNewBand() {
+  addNewOption() {
     final textController = TextEditingController();
     DialogPlatfom.showDialogPlatform(
         context: context,
         textController: textController,
-        onPressed: () => addBandToList(textController.text),
+        onPressed: () => addOptionToList(textController.text),
         title: 'title');
   }
 
-  void addBandToList(String name) {
+  void addOptionToList(String name) {
     if (name.length > 1) {
       final socketService = Provider.of<SocketService>(context, listen: false);
-      socketService.emit('add-band', {'name': name});
+      socketService.emit('add-option', {'name': name});
     }
     Navigator.pop(context);
   }

@@ -1,52 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:voting_system/services/socket_service.dart';
 
 class WelcomePage extends StatelessWidget {
+  const WelcomePage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final textController = TextEditingController();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Welcome')),
+      appBar: AppBar(
+        title: const Text('Welcome'),
+        centerTitle: true,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.pushReplacementNamed(context, 'home'),
+        child: const Icon(Icons.arrow_forward_ios),
+      ),
       body: SafeArea(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Text('NAME '),
-              // TextField(),
-              const Text('Entrar en Sala: '),
-              TextField(
-                controller: textController,
+            children: const [
+              CircleAvatar(
+                radius: 50,
               ),
+              Text('NAME '),
+              TextField(),
+              // const Spacer(),
+              // const Text('Entrar en Sala: '),
+              // const TextField),
+              // MaterialButton(
+              //   onPressed: () async {
+              //     print('TEXTO:     ' + textController.text);
+              //     final socketService = Provider.of<SocketService>(context, listen: false);
+              //     socketService.initConfig(textController.text);
 
-              MaterialButton(
-                onPressed: () async {
-                  print('TEXTO:     ' + textController.text);
-                  final socketService = Provider.of<SocketService>(context, listen: false);
-                  socketService.initConfig(textController.text);
+              //     Navigator.pushNamed(context, 'votation');
+              //   },
+              //   child: const Text('ENTRAR'),
+              //   textColor: Colors.blue,
+              // ),
+              // const Spacer(),
+              // ElevatedButton(
+              //   onPressed: () {
+              //     final socketService = Provider.of<SocketService>(context, listen: false);
 
-                  Navigator.pushNamed(context, 'votation');
-                },
-                child: const Text('ENTRAR'),
-                textColor: Colors.blue,
-              ),
-              Container(
-                width: 370,
-                height: 10,
-                decoration: BoxDecoration(color: Colors.grey[300]),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  final socketService = Provider.of<SocketService>(context, listen: false);
+              //     socketService.initConfig('no-sala');
 
-                  socketService.initConfig('no-sala');
-
-                  Navigator.pushNamed(context, 'create');
-                },
-                child: const Text('CREAR SALA'),
-              )
+              //     Navigator.pushNamed(context, 'create');
+              //   },
+              //   child: const Text('CREAR SALA'),
+              // )
             ],
           ),
         ),
