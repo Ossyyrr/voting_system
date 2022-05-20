@@ -17,6 +17,7 @@ class Option {
         id: obj.containsKey('id') ? obj['id'] : 'no-id',
         title: obj.containsKey('title') ? obj['title'] : 'no-title',
         votes: obj.containsKey('votes') ? obj['votes'] : 'no-votes',
-        votedBy: obj.containsKey('votedBy') ? obj['votedBy'] : [],
+        votedBy:
+            obj.containsKey('votedBy') ? (obj['votedBy'] as List).map((option) => User.fromMap(option)).toList() : [],
       );
 }

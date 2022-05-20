@@ -18,11 +18,11 @@ class SocketService with ChangeNotifier {
   Function get emit => _socket.emit;
 
   SocketService() {
-    // initConfig();
+    initConfig();
   }
 
-  void initConfig(String sala) {
-    print('INIT CONFIG, SALA: ' + sala);
+  void initConfig() {
+    print('INIT CONFIG');
     // Dart client
     // TODO URL
     // String socketUrl = 'https://voting-system-ossyyrr.herokuapp.com/';
@@ -33,16 +33,16 @@ class SocketService with ChangeNotifier {
         socketUrl,
         IO.OptionBuilder()
             .setTransports(['websocket']) // for Flutter or Dart VM
-            .disableAutoConnect() // disable auto-connection
-            .enableForceNew()
+            .enableAutoConnect()
+            //   .enableForceNew()
             .setExtraHeaders({
-              'sala': sala,
+              'datos': 'mis datos',
             })
             .build());
 
-    _socket
-      ..disconnect()
-      ..connect();
+    // _socket
+    //   ..disconnect()
+    //   ..connect();
 
     _socket.onConnect((_) {
       print('connect');

@@ -1,4 +1,4 @@
-import 'package:voting_system/models/Option.dart';
+import 'package:voting_system/models/option.dart';
 
 class Poll {
   String id;
@@ -6,7 +6,7 @@ class Poll {
   String creatorId;
   List<Option> options;
   bool isEditable;
-  DateTime endDate;
+  String endDate;
   bool isMultipleChoice;
   bool isPrivateVote;
 
@@ -21,14 +21,23 @@ class Poll {
     required this.isPrivateVote,
   });
 
-  factory Poll.fromMap(Map<String, dynamic> obj) => Poll(
-        id: obj.containsKey('id') ? obj['id'] : 'no-id',
-        title: obj.containsKey('title') ? obj['title'] : 'no-title',
-        creatorId: obj.containsKey('creatorId') ? obj['creatorId'] : 'no-creatorId',
-        options: obj.containsKey('options') ? obj['options'] : [],
-        isEditable: obj.containsKey('isEditable') ? obj['isEditable'] : 'no-isEditable',
-        endDate: obj.containsKey('endDate') ? obj['endDate'] : 'no-endDate',
-        isMultipleChoice: obj.containsKey('isMultipleChoice') ? obj['isMultipleChoice'] : 'no-isMultipleChoice',
-        isPrivateVote: obj.containsKey('isPrivateVote') ? obj['isPrivateVote'] : 'no-isPrivateVote',
-      );
+  factory Poll.fromMap(Map<String, dynamic> obj) {
+    print('******************************');
+    print(obj['options']);
+    print(obj['options'] is Object);
+    var opciones = (obj['options'] as List).map((option) => Option.fromMap(option)).toList();
+    print(opciones);
+
+    return Poll(
+      id: obj.containsKey('id') ? obj['id'] : 'no-id',
+      title: obj.containsKey('title') ? obj['title'] : 'no-title',
+      creatorId: obj.containsKey('creatorId') ? obj['creatorId'] : 'no-creatorId',
+      options:
+          obj.containsKey('options') ? (obj['options'] as List).map((option) => Option.fromMap(option)).toList() : [],
+      isEditable: obj.containsKey('isEditable') ? obj['isEditable'] : 'no-isEditable',
+      endDate: obj.containsKey('endDate') ? obj['endDate'] : null,
+      isMultipleChoice: obj.containsKey('isMultipleChoice') ? obj['isMultipleChoice'] : 'no-isMultipleChoice',
+      isPrivateVote: obj.containsKey('isPrivateVote') ? obj['isPrivateVote'] : 'no-isPrivateVote',
+    );
+  }
 }
