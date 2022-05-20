@@ -5,6 +5,8 @@ import 'package:voting_system/services/socket_service.dart';
 import 'package:voting_system/widgets/dialog_platform.dart';
 import 'package:voting_system/widgets/graph.dart';
 
+// TODO Borrar pagina, no se usa
+
 class VotationPage extends StatefulWidget {
   const VotationPage({Key? key}) : super(key: key);
 

@@ -65,32 +65,27 @@ class PollTile extends StatelessWidget {
   final Poll poll;
   @override
   Widget build(BuildContext context) {
-    return const Text('data');
-    // return Dismissible(
-    //   key: Key(poll.id),
-    //   direction: DismissDirection.startToEnd,
-    //   onDismissed: (_) {},
-    //   background: Container(
-    //     color: Colors.red,
-    //     alignment: Alignment.centerLeft,
-    //     padding: const EdgeInsets.all(12),
-    //     child: const Text(
-    //       'Borrar',
-    //       style: TextStyle(color: Colors.white, fontSize: 12),
-    //     ),
-    //   ),
-    //   child: ListTile(
-    //     leading: CircleAvatar(
-    //       child: Text(poll.title.substring(0, 2)),
-    //       backgroundColor: Colors.blue[100],
-    //     ),
-    //     title: Text(poll.title),
-    //     trailing: const Text(
-    //       'poll.votes.toString()',
-    //       style: TextStyle(fontSize: 20),
-    //     ),
-    //     onTap: () {},
-    //   ),
-    // );
+    return Dismissible(
+      key: Key(poll.id),
+      direction: DismissDirection.startToEnd,
+      onDismissed: (_) {},
+      background: Container(
+        color: Colors.red,
+        alignment: Alignment.centerLeft,
+        padding: const EdgeInsets.all(12),
+        child: const Text(
+          'Borrar',
+          style: TextStyle(color: Colors.white, fontSize: 12),
+        ),
+      ),
+      child: ListTile(
+        leading: CircleAvatar(
+          child: Text(poll.title.substring(0, 2)),
+          backgroundColor: Colors.blue[100],
+        ),
+        title: Text(poll.title),
+        onTap: () => Navigator.pushNamed(context, 'poll', arguments: poll),
+      ),
+    );
   }
 }

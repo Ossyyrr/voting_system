@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:voting_system/widgets/appbar_connection.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -9,7 +8,8 @@ class WelcomePage extends StatelessWidget {
     final textController = TextEditingController();
 
     return Scaffold(
-      appBar: const AppBarConnection(title: 'Welcome'),
+      // ! Si pongo el appbar se activa el provider antes de tiempo
+      //      appBar: const AppBarConnection(title: 'Welcome'),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Navigator.pushReplacementNamed(context, 'home'),
         child: const Icon(Icons.arrow_forward_ios),
