@@ -36,12 +36,14 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    print('polls **************');
+    print(polls);
     return Scaffold(
       appBar: const AppBarConnection(title: 'Home'),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         elevation: 1,
-        onPressed: () => addNewPoll('UserId'),
+        onPressed: () => addNewPoll('UserIdXXX'),
       ),
       body: SafeArea(
         child: Center(
@@ -80,7 +82,7 @@ class _HomePageState extends State<HomePage> {
       ),
       child: ListTile(
         leading: CircleAvatar(
-          child: Text(poll.title.substring(0, 2)),
+          child: Text(poll.title.substring(0, 1)),
           backgroundColor: Colors.blue[100],
         ),
         title: Text(poll.title),
@@ -97,11 +99,10 @@ class _HomePageState extends State<HomePage> {
       context: context,
       textController: textController,
       onPressed: () => {
-        // TODO WIP
-        socketService.emit('add-poll', {'userId': userId, 'pollName': textController.text}),
+        socketService.emit('add-poll', {'creatorId': userId, 'pollName': textController.text}),
         Navigator.pop(context),
       },
-      title: 'title',
+      title: 'Add New Poll',
     );
   }
 }
