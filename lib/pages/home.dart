@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:voting_system/models/poll.dart';
 import 'package:voting_system/services/socket_service.dart';
 import 'package:voting_system/widgets/appbar_connection.dart';
+import 'package:voting_system/widgets/dialog_platform.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -37,6 +38,11 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const AppBarConnection(title: 'Home'),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        elevation: 1,
+        onPressed: () => addNewPoll('UserId'),
+      ),
       body: SafeArea(
         child: Center(
           child: Column(
@@ -45,7 +51,7 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                 child: ListView.builder(
                   itemCount: polls.length,
-                  itemBuilder: (context, index) => PollTile(poll: polls[index]),
+                  itemBuilder: (context, index) => _pollTile(polls[index]),
                 ),
               ),
               const Text('My votes'),
@@ -55,20 +61,14 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-}
 
-class PollTile extends StatelessWidget {
-  const PollTile({
-    Key? key,
-    required this.poll,
-  }) : super(key: key);
-  final Poll poll;
-  @override
-  Widget build(BuildContext context) {
+  Widget _pollTile(Poll poll) {
     return Dismissible(
       key: Key(poll.id),
       direction: DismissDirection.startToEnd,
-      onDismissed: (_) {},
+      onDismissed: (_) {
+        //TODO
+      },
       background: Container(
         color: Colors.red,
         alignment: Alignment.centerLeft,
@@ -86,6 +86,22 @@ class PollTile extends StatelessWidget {
         title: Text(poll.title),
         onTap: () => Navigator.pushNamed(context, 'poll', arguments: poll),
       ),
+    );
+  }
+
+  addNewPoll(String userId) {
+    final socketService = Provider.of<SocketService>(context, listen: false);
+
+    final textController = TextEditingController();
+    DialogPlatfom.showDialogPlatform(
+      context: context,
+      textController: textController,
+      onPressed: () => {
+        // TODO WIP
+        socketService.emit('add-poll', {'userId': userId, 'pollName': textController.text}),
+        Navigator.pop(context),
+      },
+      title: 'title',
     );
   }
 }

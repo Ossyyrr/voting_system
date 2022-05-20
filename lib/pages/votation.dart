@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:voting_system/models/Option.dart';
 import 'package:voting_system/services/socket_service.dart';
 import 'package:voting_system/widgets/dialog_platform.dart';
-import 'package:voting_system/widgets/graph.dart';
 
 // TODO Borrar pagina, no se usa
 
@@ -69,10 +68,10 @@ class _VotationPageState extends State<VotationPage> {
         ),
         body: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0),
-              child: Graph(options: options),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(left: 16.0),
+            //   child: Graph(options: options),
+            // ),
             Expanded(
               child: ListView.builder(
                 itemCount: options.length,

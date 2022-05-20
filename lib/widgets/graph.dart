@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
-import 'package:voting_system/models/Option.dart';
+import 'package:voting_system/models/option.dart';
 
 class Graph extends StatelessWidget {
   const Graph({
