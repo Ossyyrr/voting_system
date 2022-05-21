@@ -94,7 +94,8 @@ class _HomePageState extends State<HomePage> {
             title: Text(poll.title),
             onTap: () async {
               socketService.emit('join-poll', {'pollId': poll.id});
-              await Navigator.pushNamed(context, 'poll', arguments: poll);
+              socketService.poll = poll;
+              await Navigator.pushNamed(context, 'poll');
               socketService.emit('leave-poll', {'pollId': poll.id});
             },
           ),

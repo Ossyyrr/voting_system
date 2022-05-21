@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:voting_system/models/option.dart';
+import 'package:voting_system/models/poll.dart';
 
 enum ServerStatus {
   Online,
@@ -13,12 +15,20 @@ enum ServerStatus {
 class SocketService with ChangeNotifier {
   ServerStatus _serverStatus = ServerStatus.Connecting;
   ServerStatus get serverStatus => _serverStatus;
+
   late IO.Socket _socket;
   late String _deviceId;
+  late Poll _poll;
 
   IO.Socket get socket => _socket;
   Function get emit => _socket.emit;
   String get deviceId => _deviceId;
+  Poll get poll => _poll;
+
+  set poll(Poll poll) {
+    _poll = poll;
+    notifyListeners();
+  }
 
   SocketService() {
     getDeviceId();
@@ -58,6 +68,11 @@ class SocketService with ChangeNotifier {
 
     //socket.on('event', (data) => print(data));
     //socket.on('fromServer', (_) => print(_));
+
+    _socket.on('active-options', (dynamic payload) {
+      _poll.options = (payload as List).map((option) => Option.fromMap(option)).toList();
+      notifyListeners();
+    });
   }
 
   void getDeviceId() async {

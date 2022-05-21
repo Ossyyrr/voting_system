@@ -7,44 +7,22 @@ import 'package:voting_system/widgets/appbar_connection.dart';
 import 'package:voting_system/widgets/dialog_platform.dart';
 import 'package:voting_system/widgets/graph.dart';
 
-class PollPage extends StatefulWidget {
+class PollPage extends StatelessWidget {
   const PollPage({Key? key}) : super(key: key);
 
   @override
-  State<PollPage> createState() => _PollPageState();
-}
-
-class _PollPageState extends State<PollPage> {
-  late Poll poll;
-
-  @override
-  void initState() {
-    final socketService = Provider.of<SocketService>(context, listen: false);
-    socketService.socket.on('active-options', _handleActiveOptions);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
-
-  _handleActiveOptions(dynamic payload) {
-    poll.options = (payload as List).map((option) => Option.fromMap(option)).toList();
-    setState(() {});
-  }
-
-  @override
   Widget build(BuildContext context) {
-    poll = ModalRoute.of(context)!.settings.arguments as Poll;
+    final socketService = Provider.of<SocketService>(context);
+    Poll poll = socketService.poll;
+
+    print('POLL SERVICE ' + poll.options.length.toString());
 
     return Scaffold(
       appBar: AppBarConnection(title: poll.title),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         elevation: 1,
-        onPressed: () => addNewOption(poll),
+        onPressed: () => addNewOption(poll, context),
       ),
       body: Column(
         children: [
@@ -56,7 +34,8 @@ class _PollPageState extends State<PollPage> {
           Expanded(
             child: ListView.builder(
               itemCount: poll.options.length,
-              itemBuilder: (context, index) => _optionTile(pollId: poll.id, option: poll.options[index]),
+              itemBuilder: (context, index) =>
+                  _optionTile(pollId: poll.id, option: poll.options[index], context: context),
             ),
           ),
         ],
@@ -67,6 +46,7 @@ class _PollPageState extends State<PollPage> {
   Widget _optionTile({
     required Option option,
     required String pollId,
+    required BuildContext context,
   }) {
     // ! Mantener este widget como Widget Function para que se refresque al recibir emisiones del back
     final socketService = Provider.of<SocketService>(context, listen: false);
@@ -109,7 +89,7 @@ class _PollPageState extends State<PollPage> {
     );
   }
 
-  addNewOption(Poll poll) {
+  addNewOption(Poll poll, BuildContext context) {
     final socketService = Provider.of<SocketService>(context, listen: false);
 
     final textController = TextEditingController();
