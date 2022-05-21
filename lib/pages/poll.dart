@@ -24,6 +24,12 @@ class _PollPageState extends State<PollPage> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
   _handleActiveOptions(dynamic payload) {
     poll.options = (payload as List).map((option) => Option.fromMap(option)).toList();
     setState(() {});

@@ -21,13 +21,13 @@ class SocketService with ChangeNotifier {
   String get deviceId => _deviceId;
 
   SocketService() {
+    getDeviceId();
     initConfig();
   }
 
   void initConfig() {
-    getDeviceId();
     print('INIT CONFIG');
-    // Dart client
+
     // TODO URL
     // String socketUrl = 'https://voting-system-ossyyrr.herokuapp.com/';
     String socketUrl = Platform.isAndroid ? 'http://192.168.1.134:3000' : 'http://localhost:3000';
@@ -44,19 +44,14 @@ class SocketService with ChangeNotifier {
             })
             .build());
 
-    // _socket
-    //   ..disconnect()
-    //   ..connect();
-
     _socket.onConnect((_) {
       print('connect');
-      //  _socket.emit('connect', 'cliente de flutter conectado');
       _serverStatus = ServerStatus.Online;
       notifyListeners();
     });
 
     _socket.onDisconnect((_) {
-      print('disconnect flutter');
+      print('disconnect');
       _serverStatus = ServerStatus.Offline;
       notifyListeners();
     });
