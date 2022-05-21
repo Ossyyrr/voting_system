@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
@@ -13,15 +14,18 @@ class SocketService with ChangeNotifier {
   ServerStatus _serverStatus = ServerStatus.Connecting;
   ServerStatus get serverStatus => _serverStatus;
   late IO.Socket _socket;
+  late String _deviceId;
 
   IO.Socket get socket => _socket;
   Function get emit => _socket.emit;
+  String get deviceId => _deviceId;
 
   SocketService() {
     initConfig();
   }
 
   void initConfig() {
+    getDeviceId();
     print('INIT CONFIG');
     // Dart client
     // TODO URL
@@ -59,5 +63,13 @@ class SocketService with ChangeNotifier {
 
     //socket.on('event', (data) => print(data));
     //socket.on('fromServer', (_) => print(_));
+  }
+
+  void getDeviceId() async {
+    final deviceInfoPlugin = DeviceInfoPlugin();
+    final deviceInfo = await deviceInfoPlugin.deviceInfo;
+    final map = deviceInfo.toMap();
+    print('Device id: ' + map['id']);
+    _deviceId = map['id'];
   }
 }

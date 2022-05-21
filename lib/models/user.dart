@@ -1,11 +1,9 @@
-import 'package:voting_system/models/poll.dart';
-
 class User {
   String id;
   String name;
   String avatarId;
-  List<Poll> votedPolls;
-  List<Poll> myPolls;
+  List<String> votedPolls;
+  List<String> myPolls;
 
   User({
     required this.id,
@@ -19,7 +17,7 @@ class User {
         id: obj.containsKey('id') ? obj['id'] : 'no-id',
         name: obj.containsKey('name') ? obj['name'] : 'no-name',
         avatarId: obj.containsKey('avatarId') ? obj['avatarId'] : 'no-avatarId',
-        votedPolls: obj.containsKey('votedPolls') ? obj['votedPolls'] : [],
-        myPolls: obj.containsKey('myPolls') ? obj['myPolls'] : [],
+        votedPolls: obj.containsKey('votedPolls') ? obj['votedPolls'].cast<String>() : [],
+        myPolls: obj.containsKey('myPolls') ? obj['myPolls'].cast<String>() : [],
       );
 }

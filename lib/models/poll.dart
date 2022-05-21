@@ -1,9 +1,11 @@
 import 'package:voting_system/models/option.dart';
+import 'package:voting_system/models/user.dart';
 
 class Poll {
   String id;
   String title;
   String creatorId;
+  List<User> activeUsers;
   List<Option> options;
   bool isEditable;
   String endDate;
@@ -14,6 +16,7 @@ class Poll {
     required this.id,
     required this.title,
     required this.creatorId,
+    required this.activeUsers,
     required this.options,
     required this.isEditable,
     required this.endDate,
@@ -22,16 +25,13 @@ class Poll {
   });
 
   factory Poll.fromMap(Map<String, dynamic> obj) {
-    print('******************************');
-    print(obj['options']);
-    print(obj['options'] is Object);
-    var opciones = (obj['options'] as List).map((option) => Option.fromMap(option)).toList();
-    print(opciones);
-
     return Poll(
       id: obj.containsKey('id') ? obj['id'] : 'no-id',
       title: obj.containsKey('title') ? obj['title'] : 'no-title',
       creatorId: obj.containsKey('creatorId') ? obj['creatorId'] : 'no-creatorId',
+      activeUsers: obj.containsKey('activeUsers')
+          ? (obj['activeUsers'] as List).map((activeUser) => User.fromMap(activeUser)).toList()
+          : [],
       options:
           obj.containsKey('options') ? (obj['options'] as List).map((option) => Option.fromMap(option)).toList() : [],
       isEditable: obj.containsKey('isEditable') ? obj['isEditable'] : 'no-isEditable',

@@ -80,17 +80,25 @@ class _PollPageState extends State<PollPage> {
           style: TextStyle(color: Colors.white, fontSize: 12),
         ),
       ),
-      child: ListTile(
-        leading: CircleAvatar(
-          child: Text(option.title.substring(0, 2)),
-          backgroundColor: Colors.blue[100],
-        ),
-        title: Text(option.title),
-        trailing: Text(
-          option.votes.toString(),
-          style: const TextStyle(fontSize: 20),
-        ),
-        onTap: () => socketService.emit('vote-option', {'pollId': pollId, 'optionId': option.id}),
+      child: Column(
+        children: [
+          ListTile(
+            leading: CircleAvatar(
+              child: Text(option.title.substring(0, 2)),
+              backgroundColor: Colors.blue[100],
+            ),
+            title: Text(option.title),
+            trailing: Text(
+              option.votes.toString(),
+              style: const TextStyle(fontSize: 20),
+            ),
+            onTap: () => socketService.emit('vote-option', {'pollId': pollId, 'optionId': option.id}),
+          ),
+          Container(
+            color: Colors.red,
+            child: const Text('PA'),
+          )
+        ],
       ),
     );
   }

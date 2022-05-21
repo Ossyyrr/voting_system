@@ -27,8 +27,6 @@ class _VotationPageState extends State<VotationPage> {
   }
 
   _handleActiveOptions(dynamic payload) {
-    print('active-options ****');
-    print(payload);
     if ((payload is Map) && payload.containsKey('exist-room') && !payload['exist-room']) {
       print('LA SALA NO EXISTE');
     } else {
