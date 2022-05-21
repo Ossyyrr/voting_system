@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:voting_system/pages/create_room.dart';
 import 'package:voting_system/pages/home.dart';
 import 'package:voting_system/pages/poll.dart';
-import 'package:voting_system/pages/votation.dart';
 import 'package:voting_system/pages/welcome.dart';
 import 'package:voting_system/services/socket_service.dart';
 
@@ -35,10 +34,8 @@ class MyApp extends StatelessWidget {
           'home': (_) => const HomePage(),
           'poll': (_) => const PollPage(),
           'create': (_) => const CreateRoomPage(),
-          // TODO Delete:
-          'votation': (_) => const VotationPage(),
         },
-        home: const VotationPage(),
+        home: const HomePage(),
       ),
     );
   }

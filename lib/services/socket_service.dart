@@ -69,7 +69,8 @@ class SocketService with ChangeNotifier {
     final deviceInfoPlugin = DeviceInfoPlugin();
     final deviceInfo = await deviceInfoPlugin.deviceInfo;
     final map = deviceInfo.toMap();
-    print('Device id: ' + map['id']);
-    _deviceId = map['id'];
+    if (Platform.isIOS) _deviceId = map['identifierForVendor'];
+    if (Platform.isAndroid) _deviceId = 'Device id: ' + map['androidId'];
+    print('DEVICE_ID: ' + _deviceId);
   }
 }

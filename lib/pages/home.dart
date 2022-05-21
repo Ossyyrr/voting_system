@@ -92,7 +92,11 @@ class _HomePageState extends State<HomePage> {
                   )
                 : const SizedBox(),
             title: Text(poll.title),
-            onTap: () => Navigator.pushNamed(context, 'poll', arguments: poll),
+            onTap: () async {
+              socketService.emit('join-poll', {'pollId': poll.id});
+              await Navigator.pushNamed(context, 'poll', arguments: poll);
+              socketService.emit('leave-poll', {'pollId': poll.id});
+            },
           ),
           Row(
             children: [
