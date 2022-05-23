@@ -18,12 +18,19 @@ class SocketService with ChangeNotifier {
 
   late IO.Socket _socket;
   late String _deviceId;
+  late List<Poll> _polls = [];
   late Poll _poll;
 
   IO.Socket get socket => _socket;
   Function get emit => _socket.emit;
   String get deviceId => _deviceId;
+  List<Poll> get polls => _polls;
   Poll get poll => _poll;
+
+  set polls(List<Poll> polls) {
+    _polls = polls;
+    notifyListeners();
+  }
 
   set poll(Poll poll) {
     _poll = poll;
@@ -71,6 +78,12 @@ class SocketService with ChangeNotifier {
 
     _socket.on('active-options', (dynamic payload) {
       _poll.options = (payload as List).map((option) => Option.fromMap(option)).toList();
+      notifyListeners();
+    });
+
+    _socket.on('polls', (dynamic payload) {
+      _polls = (payload as List).map((option) => Poll.fromMap(option)).toList();
+      print('SE actualizan las polls ******');
       notifyListeners();
     });
   }

@@ -15,8 +15,6 @@ class PollPage extends StatelessWidget {
     final socketService = Provider.of<SocketService>(context);
     Poll poll = socketService.poll;
 
-    print('POLL SERVICE ' + poll.options.length.toString());
-
     return Scaffold(
       appBar: AppBarConnection(title: poll.title),
       floatingActionButton: FloatingActionButton(

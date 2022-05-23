@@ -13,27 +13,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Poll> polls = [];
-
-  @override
-  void initState() {
-    final socketService = Provider.of<SocketService>(context, listen: false);
-    // Al establecer la conexión:
-    socketService.socket.on('polls', _handleActiveOptions);
-    super.initState();
-  }
-
-  _handleActiveOptions(dynamic payload) {
-    print('Polls');
-    print(payload);
-
-    polls = (payload as List).map((option) => Poll.fromMap(option)).toList();
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     final socketService = Provider.of<SocketService>(context);
+    List<Poll> polls = socketService.polls;
 
     return Scaffold(
       appBar: const AppBarConnection(title: 'Polls'),
