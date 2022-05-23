@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:voting_system/models/poll.dart';
+import 'package:voting_system/services/shared_preferences_service.dart';
 import 'package:voting_system/services/socket_service.dart';
 import 'package:voting_system/widgets/appbar_connection.dart';
 import 'package:voting_system/widgets/dialog_platform.dart';
@@ -11,6 +12,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final socketService = Provider.of<SocketService>(context);
+    final sharedPreferencesService = Provider.of<SharedPreferencesService>(context);
 
     List<Poll> polls = socketService.polls;
 
@@ -19,7 +21,7 @@ class HomePage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         elevation: 1,
-        onPressed: () => addNewPoll(context, socketService.deviceId),
+        onPressed: () => addNewPoll(context, sharedPreferencesService.deviceId),
       ),
       body: SafeArea(
         child: Center(
@@ -40,6 +42,7 @@ class HomePage extends StatelessWidget {
 
   Widget _pollTile(BuildContext context, Poll poll) {
     final socketService = Provider.of<SocketService>(context);
+    final sharedPreferencesService = Provider.of<SharedPreferencesService>(context);
 
     return Dismissible(
       key: Key(poll.id),
@@ -64,7 +67,7 @@ class HomePage extends StatelessWidget {
               child: Text(poll.title.substring(0, 1)),
               backgroundColor: Colors.blue[100],
             ),
-            trailing: (socketService.deviceId == poll.creatorId)
+            trailing: (sharedPreferencesService.deviceId == poll.creatorId)
                 ? const Text(
                     'Creator',
                     style: TextStyle(fontSize: 12),

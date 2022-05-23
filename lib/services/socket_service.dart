@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:voting_system/models/option.dart';
@@ -17,13 +16,11 @@ class SocketService with ChangeNotifier {
   ServerStatus get serverStatus => _serverStatus;
 
   late IO.Socket _socket;
-  late String _deviceId;
   late List<Poll> _polls = [];
   late Poll _poll;
 
   IO.Socket get socket => _socket;
   Function get emit => _socket.emit;
-  String get deviceId => _deviceId;
   List<Poll> get polls => _polls;
   Poll get poll => _poll;
 
@@ -38,11 +35,10 @@ class SocketService with ChangeNotifier {
   }
 
   SocketService() {
-    getDeviceId();
-    initConfig();
+    //   initConfig();
   }
 
-  void initConfig() {
+  void initConfig(String userID) {
     print('INIT CONFIG');
 
     // TODO URL
@@ -58,6 +54,7 @@ class SocketService with ChangeNotifier {
             //   .enableForceNew()
             .setExtraHeaders({
               'datos': 'mis datos',
+              'userid': userID, // TODO Pasar getDeviceId a sharedPreferenceService y usarlo aki
             })
             .build());
 
@@ -85,14 +82,5 @@ class SocketService with ChangeNotifier {
       _polls = (payload as List).map((option) => Poll.fromMap(option)).toList();
       notifyListeners();
     });
-  }
-
-  void getDeviceId() async {
-    final deviceInfoPlugin = DeviceInfoPlugin();
-    final deviceInfo = await deviceInfoPlugin.deviceInfo;
-    final map = deviceInfo.toMap();
-    if (Platform.isIOS) _deviceId = map['identifierForVendor'];
-    if (Platform.isAndroid) _deviceId = 'Device id: ' + map['androidId'];
-    print('DEVICE_ID: ' + _deviceId);
   }
 }
