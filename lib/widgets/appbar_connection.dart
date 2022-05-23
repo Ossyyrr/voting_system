@@ -33,13 +33,13 @@ class AppBarConnection extends StatelessWidget implements PreferredSizeWidget {
                 style: const TextStyle(color: Colors.black87, fontSize: 14),
               )),
         ),
+        Container(
+          margin: const EdgeInsets.only(right: 10),
+          child: socketService.serverStatus == ServerStatus.Online
+              ? Icon(Icons.check_circle, color: Colors.blue[300])
+              : Icon(Icons.connecting_airports_rounded, color: Colors.red[300]),
+        ),
       ],
-      leading: Container(
-        margin: const EdgeInsets.only(right: 10),
-        child: socketService.serverStatus == ServerStatus.Online
-            ? Icon(Icons.check_circle, color: Colors.blue[300])
-            : Icon(Icons.connecting_airports_rounded, color: Colors.red[300]),
-      ),
 
       centerTitle: true,
       title: Text(

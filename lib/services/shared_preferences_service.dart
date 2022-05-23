@@ -23,7 +23,6 @@ class SharedPreferencesService with ChangeNotifier {
     _userName = _prefs.getString('userName') ?? '';
     _deviceId = _prefs.getString('deviceId') ?? '';
     _getDeviceId();
-
     notifyListeners();
     print('USERNAME: ' + _userName);
   }
@@ -41,7 +40,6 @@ class SharedPreferencesService with ChangeNotifier {
     if (Platform.isIOS) _deviceId = map['identifierForVendor'];
     if (Platform.isAndroid) _deviceId = map['androidId'];
     await _prefs.setString('deviceId', _deviceId);
-
     print('DEVICE_ID: ' + _deviceId);
   }
 }
