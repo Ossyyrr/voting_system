@@ -3,14 +3,14 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:voting_system/services/socket_service.dart';
 
-class CreateRoomPage extends StatefulWidget {
-  const CreateRoomPage({Key? key}) : super(key: key);
+class CreatePollPage extends StatefulWidget {
+  const CreatePollPage({Key? key}) : super(key: key);
 
   @override
-  State<CreateRoomPage> createState() => _CreateRoomPageState();
+  State<CreatePollPage> createState() => _CreatePollPageState();
 }
 
-class _CreateRoomPageState extends State<CreateRoomPage> {
+class _CreatePollPageState extends State<CreatePollPage> {
   String roomId = '';
   final textController = TextEditingController();
   final roomIdController = TextEditingController();

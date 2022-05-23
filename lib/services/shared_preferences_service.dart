@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesService with ChangeNotifier {
   late SharedPreferences _prefs;
-  String _userName = 'no-name';
+  late String _userName;
 
   String get userName => _prefs.getString('userName') ?? 'no-name';
   set userName(String name) => _saveUserName(name);

@@ -33,9 +33,7 @@ class AppBarConnection extends StatelessWidget implements PreferredSizeWidget {
       ],
       leading: Padding(
         padding: const EdgeInsets.all(4.0),
-        child: CircleAvatar(
-          child: Text(sharedPreferencesService.userName.substring(0, 2)),
-        ),
+        child: Text(sharedPreferencesService.userName),
       ),
 
       centerTitle: true,

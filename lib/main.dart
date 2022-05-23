@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:voting_system/pages/create_room.dart';
+import 'package:voting_system/pages/create_poll.dart';
+import 'package:voting_system/pages/create_user.dart';
 import 'package:voting_system/pages/home.dart';
 import 'package:voting_system/pages/poll.dart';
-import 'package:voting_system/pages/welcome.dart';
 import 'package:voting_system/services/shared_preferences_service.dart';
 import 'package:voting_system/services/socket_service.dart';
 
@@ -27,12 +27,12 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        initialRoute: 'welcome',
+        initialRoute: 'create-user',
         routes: {
-          'welcome': (_) => const WelcomePage(),
+          'create-user': (_) => const CreateUserPage(),
           'home': (_) => const HomePage(),
           'poll': (_) => const PollPage(),
-          'create': (_) => const CreateRoomPage(),
+          'create-poll': (_) => const CreatePollPage(),
         },
         home: const HomePage(),
       ),

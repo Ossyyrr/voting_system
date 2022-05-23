@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:voting_system/services/shared_preferences_service.dart';
 
-class WelcomePage extends StatelessWidget {
-  const WelcomePage({Key? key}) : super(key: key);
+class CreateUserPage extends StatelessWidget {
+  const CreateUserPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final sharedPreferencesService = Provider.of<SharedPreferencesService>(context);
     final textController = TextEditingController();
+
+    print('USERNAME **********');
+    print(sharedPreferencesService.userName);
+
     return Scaffold(
       // ! Si pongo el appbar se activa el provider antes de tiempo
       //      appBar: const AppBarConnection(title: 'Welcome'),
