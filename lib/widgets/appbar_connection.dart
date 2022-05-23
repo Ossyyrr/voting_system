@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:voting_system/services/shared_preferences_service.dart';
 import 'package:voting_system/services/socket_service.dart';
 
 class AppBarConnection extends StatelessWidget implements PreferredSizeWidget {
@@ -17,6 +18,7 @@ class AppBarConnection extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final socketService = Provider.of<SocketService>(context);
+    final sharedPreferencesService = Provider.of<SharedPreferencesService>(context);
 
     return AppBar(
       foregroundColor: Colors.black87,
@@ -29,6 +31,13 @@ class AppBarConnection extends StatelessWidget implements PreferredSizeWidget {
               : Icon(Icons.connecting_airports_rounded, color: Colors.red[300]),
         )
       ],
+      leading: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: CircleAvatar(
+          child: Text(sharedPreferencesService.userName.substring(0, 2)),
+        ),
+      ),
+
       centerTitle: true,
       title: Text(
         title,
