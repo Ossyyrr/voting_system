@@ -10,9 +10,6 @@ class CreateUserPage extends StatelessWidget {
     final sharedPreferencesService = Provider.of<SharedPreferencesService>(context);
     final textController = TextEditingController();
 
-    print('USERNAME **********');
-    print(sharedPreferencesService.userName);
-
     return Scaffold(
       // ! Si pongo el appbar se activa el provider antes de tiempo
       //      appBar: const AppBarConnection(title: 'Welcome'),

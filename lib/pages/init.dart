@@ -11,7 +11,7 @@ class InitPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final sharedPreferencesService = Provider.of<SharedPreferencesService>(context);
 
-    if (sharedPreferencesService.userName == 'no-name') {
+    if (sharedPreferencesService.userName == '') {
       return const CreateUserPage();
     } else {
       return const HomePage();

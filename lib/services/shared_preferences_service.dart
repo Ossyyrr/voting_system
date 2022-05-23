@@ -5,7 +5,7 @@ class SharedPreferencesService with ChangeNotifier {
   late SharedPreferences _prefs;
   late String _userName;
 
-  String get userName => _prefs.getString('userName') ?? 'no-name';
+  String get userName => _prefs.getString('userName') ?? '';
   set userName(String name) => _saveUserName(name);
 
   SharedPreferencesService(SharedPreferences perfs) {
@@ -14,8 +14,9 @@ class SharedPreferencesService with ChangeNotifier {
   }
 
   void initConfig() async {
-    _userName = _prefs.getString('userName') ?? 'no-name';
+    _userName = _prefs.getString('userName') ?? '';
     notifyListeners();
+    print('USERNAME: ' + _userName);
   }
 
   Future<void> _saveUserName(String name) async {

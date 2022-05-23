@@ -24,16 +24,21 @@ class AppBarConnection extends StatelessWidget implements PreferredSizeWidget {
       foregroundColor: Colors.black87,
       // elevation: 1,
       actions: [
-        Container(
-          margin: const EdgeInsets.only(right: 10),
-          child: socketService.serverStatus == ServerStatus.Online
-              ? Icon(Icons.check_circle, color: Colors.blue[300])
-              : Icon(Icons.connecting_airports_rounded, color: Colors.red[300]),
-        )
+        Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: TextButton(
+              onPressed: () => Navigator.pushNamed(context, 'create-user'),
+              child: Text(
+                sharedPreferencesService.userName,
+                style: const TextStyle(color: Colors.black87, fontSize: 14),
+              )),
+        ),
       ],
-      leading: Padding(
-        padding: const EdgeInsets.all(4.0),
-        child: Text(sharedPreferencesService.userName),
+      leading: Container(
+        margin: const EdgeInsets.only(right: 10),
+        child: socketService.serverStatus == ServerStatus.Online
+            ? Icon(Icons.check_circle, color: Colors.blue[300])
+            : Icon(Icons.connecting_airports_rounded, color: Colors.red[300]),
       ),
 
       centerTitle: true,
