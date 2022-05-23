@@ -5,14 +5,9 @@ import 'package:voting_system/services/socket_service.dart';
 import 'package:voting_system/widgets/appbar_connection.dart';
 import 'package:voting_system/widgets/dialog_platform.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final socketService = Provider.of<SocketService>(context);
@@ -23,7 +18,7 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         elevation: 1,
-        onPressed: () => addNewPoll(socketService.deviceId),
+        onPressed: () => addNewPoll(context, socketService.deviceId),
       ),
       body: SafeArea(
         child: Center(
@@ -32,7 +27,7 @@ class _HomePageState extends State<HomePage> {
               Expanded(
                 child: ListView.builder(
                   itemCount: polls.length,
-                  itemBuilder: (context, index) => _pollTile(polls[index]),
+                  itemBuilder: (context, index) => _pollTile(context, polls[index]),
                 ),
               ),
             ],
@@ -42,7 +37,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _pollTile(Poll poll) {
+  Widget _pollTile(BuildContext context, Poll poll) {
     final socketService = Provider.of<SocketService>(context);
 
     return Dismissible(
@@ -111,7 +106,7 @@ class _HomePageState extends State<HomePage> {
     return listActiveUsers;
   }
 
-  addNewPoll(String userId) {
+  addNewPoll(BuildContext context, String userId) {
     final socketService = Provider.of<SocketService>(context, listen: false);
 
     final textController = TextEditingController();
