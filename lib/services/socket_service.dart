@@ -83,7 +83,6 @@ class SocketService with ChangeNotifier {
 
     _socket.on('polls', (dynamic payload) {
       _polls = (payload as List).map((option) => Poll.fromMap(option)).toList();
-      print('SE actualizan las polls ******');
       notifyListeners();
     });
   }
