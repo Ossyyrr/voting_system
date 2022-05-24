@@ -42,7 +42,7 @@ class SocketService with ChangeNotifier {
     print('INIT CONFIG');
 
     // TODO URL
-    // String socketUrl = 'https://voting-system-ossyyrr.herokuapp.com/';
+    //String socketUrl = 'https://voting-system-ossyyrr.herokuapp.com/';
     String socketUrl = Platform.isAndroid ? 'http://192.168.1.134:3000' : 'http://localhost:3000';
     print('init config');
 
