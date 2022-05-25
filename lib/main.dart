@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:voting_system/pages/create_poll.dart';
-import 'package:voting_system/pages/create_user.dart';
 import 'package:voting_system/pages/home.dart';
 import 'package:voting_system/pages/init.dart';
+import 'package:voting_system/pages/login.dart';
 import 'package:voting_system/pages/poll.dart';
 import 'package:voting_system/services/auth_service.dart';
 import 'package:voting_system/services/shared_preferences_service.dart';
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
         initialRoute: 'init',
         routes: {
           'init': (_) => const InitPage(),
-          'create-user': (_) => const CreateUserPage(),
+          'login': (_) => const Login(),
           'home': (_) => const HomePage(),
           'poll': (_) => const PollPage(),
           'create-poll': (_) => const CreatePollPage(),

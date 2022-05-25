@@ -27,7 +27,7 @@ class AppBarConnection extends StatelessWidget implements PreferredSizeWidget {
         Padding(
           padding: const EdgeInsets.all(4.0),
           child: TextButton(
-              onPressed: () => Navigator.pushNamed(context, 'create-user'),
+              onPressed: () => Navigator.pushNamed(context, 'login'),
               child: Text(
                 sharedPreferencesService.userName,
                 style: const TextStyle(color: Colors.black87, fontSize: 14),

@@ -4,11 +4,12 @@ import 'package:voting_system/services/auth_service.dart';
 import 'package:voting_system/services/shared_preferences_service.dart';
 import 'package:voting_system/widgets/textfield_rounded.dart';
 
-class CreateUserPage extends StatelessWidget {
-  const CreateUserPage({Key? key}) : super(key: key);
+class Login extends StatelessWidget {
+  const Login({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
     final sharedPreferencesService = Provider.of<SharedPreferencesService>(context);
     final nameCtrl = TextEditingController();
     final emailCtrl = TextEditingController();
@@ -17,31 +18,27 @@ class CreateUserPage extends StatelessWidget {
       // ! Si pongo el appbar se activa el provider antes de tiempo
       //      appBar: const AppBarConnection(title: 'Welcome'),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          final authService = Provider.of<AuthService>(context, listen: false);
-          sharedPreferencesService.userName = nameCtrl.text;
-          authService.login('test5@hotmail.com', '123456');
-          //  Navigator.pushReplacementNamed(context, 'home');
-
-          //  authService.autenticando
-          //     ? () => {}
-          //     : () async {
-          //         FocusScope.of(context).unfocus();
-
-          //         final loginOk = await authService.login(
-          //             emailCtrl.text.trim(), passCtrl.text.trim());
-
-          //         if (loginOk) {
-          //           socketServie.connect();
-          //           Navigator.pushReplacementNamed(context, 'usuarios');
-          //         } else {
-          //           // Mostara alerta
-          //           mostrarAlerta(context, 'Login incorrecto',
-          //               'Revise sus credenciales nuevamente');
-          //         }
-          //       },
-        },
-        child: const Icon(Icons.arrow_forward_ios),
+        onPressed: authService.isAuthenticating
+            ? null
+            : () async {
+                sharedPreferencesService.userName = nameCtrl.text;
+                //   final loginOk=   authService.login(emailCtrl.text.trim(), passCtrl.text.trim());
+                final loginOk = await authService.login('test5@hotmail.com', '123456');
+                FocusScope.of(context).unfocus();
+                if (loginOk) {
+                  Navigator.pushReplacementNamed(context, 'home');
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text("Login incorrecto"),
+                  ));
+                }
+              },
+        child: authService.isAuthenticating
+            ? const CircularProgressIndicator(
+                color: Colors.white,
+                strokeWidth: 3,
+              )
+            : const Icon(Icons.arrow_forward_ios),
       ),
       body: SafeArea(
         child: Center(
