@@ -9,10 +9,18 @@
       "client_info": {
         "mobilesdk_app_id": "1:1041896241317:android:dc9527f42e616518bb354c",
         "android_client_info": {
-          "package_name": "com.example.voting_system"
+          "package_name": "com.ossyyrr.votingsystem"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "1041896241317-anli9mctu33qbvp2i4a2dcevb57tmu20.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ossyyrr.votingsystem",
+            "certificate_hash": "37862f38f56700c436ce53926fabdc40f0eed0fa"
+          }
+        },
         {
           "client_id": "1041896241317-l291msv8dg1ulukhg4s38gdcnj1qvene.apps.googleusercontent.com",
           "client_type": 3
@@ -29,6 +37,13 @@
             {
               "client_id": "1041896241317-l291msv8dg1ulukhg4s38gdcnj1qvene.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1041896241317-ut4jm9jlb2v9ga4s5facjnctl81ri27n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ossyyrr.votingsystem"
+              }
             }
           ]
         }
