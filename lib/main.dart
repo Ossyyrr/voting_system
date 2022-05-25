@@ -6,6 +6,7 @@ import 'package:voting_system/pages/create_user.dart';
 import 'package:voting_system/pages/home.dart';
 import 'package:voting_system/pages/init.dart';
 import 'package:voting_system/pages/poll.dart';
+import 'package:voting_system/services/auth_service.dart';
 import 'package:voting_system/services/shared_preferences_service.dart';
 import 'package:voting_system/services/socket_service.dart';
 
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => SocketService()),
         ChangeNotifierProvider(create: (_) => SharedPreferencesService(prefs)),
+        ChangeNotifierProvider(create: (_) => AuthService()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

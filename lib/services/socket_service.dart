@@ -1,7 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:voting_system/global/enviroments.dart';
 import 'package:voting_system/models/option.dart';
 import 'package:voting_system/models/poll.dart';
 
@@ -41,13 +40,8 @@ class SocketService with ChangeNotifier {
   void initConfig(String userID) {
     print('INIT CONFIG');
 
-    // TODO URL
-    //String socketUrl = 'https://voting-system-ossyyrr.herokuapp.com/';
-    String socketUrl = Platform.isAndroid ? 'http://192.168.1.134:3000' : 'http://localhost:3000';
-    print('init config');
-
     _socket = IO.io(
-        socketUrl,
+        Enviroment.socketUrl,
         IO.OptionBuilder()
             .setTransports(['websocket']) // for Flutter or Dart VM
             .enableAutoConnect()

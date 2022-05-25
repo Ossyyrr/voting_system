@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:voting_system/services/auth_service.dart';
 import 'package:voting_system/services/shared_preferences_service.dart';
 
 class CreateUserPage extends StatelessWidget {
@@ -15,8 +16,10 @@ class CreateUserPage extends StatelessWidget {
       //      appBar: const AppBarConnection(title: 'Welcome'),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          final authService = Provider.of<AuthService>(context, listen: false);
           sharedPreferencesService.userName = textController.text;
-          Navigator.pushReplacementNamed(context, 'home');
+          authService.login('test5@hotmail.com', '123456');
+          //  Navigator.pushReplacementNamed(context, 'home');
         },
         child: const Icon(Icons.arrow_forward_ios),
       ),

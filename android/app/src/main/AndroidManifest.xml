@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.voting_system">
+    package="com.ossyyrr.votingsystem">
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:label="voting_system"
