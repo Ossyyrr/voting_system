@@ -6,6 +6,7 @@ import 'package:voting_system/pages/home.dart';
 import 'package:voting_system/pages/init.dart';
 import 'package:voting_system/pages/login.dart';
 import 'package:voting_system/pages/poll.dart';
+import 'package:voting_system/pages/register.dart';
 import 'package:voting_system/services/auth_service.dart';
 import 'package:voting_system/services/shared_preferences_service.dart';
 import 'package:voting_system/services/socket_service.dart';
@@ -37,7 +38,8 @@ class MyApp extends StatelessWidget {
         initialRoute: 'init',
         routes: {
           'init': (_) => const InitPage(),
-          'login': (_) => const Login(),
+          'login': (_) => const LoginPage(),
+          'register': (_) => const RegistrerPage(),
           'home': (_) => const HomePage(),
           'poll': (_) => const PollPage(),
           'create-poll': (_) => const CreatePollPage(),

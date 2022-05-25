@@ -16,6 +16,28 @@ class AuthService with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<bool> register(String name, String email, String password) async {
+    final data = {'name': name, 'email': email, 'password': password};
+
+    final uri = Uri.parse('${Enviroment.apiUrl}/login/new');
+    final resp = await http.post(uri, body: jsonEncode(data), headers: {'Content-Type': 'application/json'});
+
+    print(resp.statusCode);
+    print(resp.body);
+    if (resp.statusCode == 200) {
+      final loginResponse = loginResponseFromJson(resp.body);
+      user = loginResponse.usuarioDb;
+      print(resp.body);
+
+      //  Guardar token
+      await _saveToken(loginResponse.token);
+
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   Future<bool> login(String email, String password) async {
     isAuthenticating = true;
     final data = {'email': email, 'password': password};

@@ -8,26 +8,26 @@ String userAuthToJson(UserAuth data) => json.encode(data.toJson());
 
 class UserAuth {
   UserAuth({
-    required this.nombre,
+    required this.name,
     required this.email,
     required this.online,
     required this.uid,
   });
 
-  String nombre;
+  String name;
   String email;
   bool online;
   String uid;
 
   factory UserAuth.fromJson(Map<String, dynamic> json) => UserAuth(
-        nombre: json["nombre"],
+        name: json["name"],
         email: json["email"],
         online: json["online"],
         uid: json["uid"],
       );
 
   Map<String, dynamic> toJson() => {
-        "nombre": nombre,
+        "name": name,
         "email": email,
         "online": online,
         "uid": uid,

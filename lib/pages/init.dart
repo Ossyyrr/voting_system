@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:voting_system/pages/home.dart';
 import 'package:voting_system/pages/login.dart';
 import 'package:voting_system/services/shared_preferences_service.dart';
 import 'package:voting_system/services/socket_service.dart';
@@ -14,10 +13,10 @@ class InitPage extends StatelessWidget {
     final sharedPreferencesService = Provider.of<SharedPreferencesService>(context);
     socketService.initConfig(sharedPreferencesService.deviceId);
 
-    if (sharedPreferencesService.userName == '') {
-      return const Login();
-    } else {
-      return const HomePage();
-    }
+    // if (sharedPreferencesService.userName == '') {
+    return const LoginPage();
+    // } else {
+    //   return const HomePage();
+    // }
   }
 }

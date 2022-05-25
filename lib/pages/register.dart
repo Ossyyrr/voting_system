@@ -1,34 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:voting_system/services/auth_service.dart';
+import 'package:voting_system/services/shared_preferences_service.dart';
 import 'package:voting_system/widgets/textfield_rounded.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class RegistrerPage extends StatelessWidget {
+  const RegistrerPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
+    final sharedPreferencesService = Provider.of<SharedPreferencesService>(context);
+    final nameCtrl = TextEditingController();
     final emailCtrl = TextEditingController();
     final passCtrl = TextEditingController();
     return Scaffold(
       // ! Si pongo el appbar se activa el provider antes de tiempo
       //      appBar: const AppBarConnection(title: 'Welcome'),
       floatingActionButton: FloatingActionButton(
-        onPressed: authService.isAuthenticating
-            ? null
-            : () async {
-                //   final loginOk=   authService.login(emailCtrl.text.trim(), passCtrl.text.trim());
-                final loginOk = await authService.login('test5@hotmail.com', '123456');
-                FocusScope.of(context).unfocus();
-                if (loginOk) {
-                  Navigator.pushReplacementNamed(context, 'home');
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Login incorrecto"),
-                  ));
-                }
-              },
+        onPressed: () async {
+          print('REGISTRO *******');
+          //   final loginOk=   authService.login(emailCtrl.text.trim(), passCtrl.text.trim());
+          final loginOk = await authService.register('pepe', 'test10@hotmail.com', '123456');
+          FocusScope.of(context).unfocus();
+          if (loginOk) {
+            sharedPreferencesService.userName = nameCtrl.text;
+
+            Navigator.pushReplacementNamed(context, 'home');
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text("Registro incorrecto"),
+            ));
+          }
+        },
         child: authService.isAuthenticating
             ? const CircularProgressIndicator(
                 color: Colors.white,
@@ -41,7 +45,15 @@ class LoginPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text('LOGIN'),
+              const Text('Registro'),
+              const CircleAvatar(
+                radius: 50,
+              ),
+              TextFieldRounded(
+                icon: Icons.mail_outline,
+                placeholder: 'Name',
+                textController: nameCtrl,
+              ),
               TextFieldRounded(
                 icon: Icons.mail_outline,
                 placeholder: 'Correo',
@@ -54,10 +66,7 @@ class LoginPage extends StatelessWidget {
                 textController: passCtrl,
                 isPassword: true,
               ),
-              TextButton(
-                onPressed: () => Navigator.pushReplacementNamed(context, 'register'),
-                child: const Text('Registrarse'),
-              )
+              TextButton(onPressed: () => Navigator.pushReplacementNamed(context, 'login'), child: const Text('Login'))
             ],
           ),
         ),
