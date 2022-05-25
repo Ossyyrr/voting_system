@@ -18,21 +18,21 @@ class RegistrerPage extends StatelessWidget {
       // ! Si pongo el appbar se activa el provider antes de tiempo
       //      appBar: const AppBarConnection(title: 'Welcome'),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          print('REGISTRO *******');
-          //   final loginOk=   authService.login(emailCtrl.text.trim(), passCtrl.text.trim());
-          final loginOk = await authService.register('pepe', 'test10@hotmail.com', '123456');
-          FocusScope.of(context).unfocus();
-          if (loginOk) {
-            sharedPreferencesService.userName = nameCtrl.text;
+        onPressed: authService.isAuthenticating
+            ? null
+            : () async {
+                //   final loginOk=   authService.login(nameCtrl.text,emailCtrl.text.trim(), passCtrl.text.trim());
+                final loginOk = await authService.register('pepe', 'test1@hotmail.com', '123456');
+                FocusScope.of(context).unfocus();
+                if (loginOk == true) {
+                  sharedPreferencesService.userName = nameCtrl.text;
 
-            Navigator.pushReplacementNamed(context, 'home');
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              content: Text("Registro incorrecto"),
-            ));
-          }
-        },
+                  Navigator.pushReplacementNamed(context, 'home');
+                }
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: Text(loginOk),
+                ));
+              },
         child: authService.isAuthenticating
             ? const CircularProgressIndicator(
                 color: Colors.white,

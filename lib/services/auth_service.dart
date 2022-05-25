@@ -16,7 +16,9 @@ class AuthService with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> register(String name, String email, String password) async {
+  Future register(String name, String email, String password) async {
+    isAuthenticating = true;
+
     final data = {'name': name, 'email': email, 'password': password};
 
     final uri = Uri.parse('${Enviroment.apiUrl}/login/new');
@@ -24,6 +26,9 @@ class AuthService with ChangeNotifier {
 
     print(resp.statusCode);
     print(resp.body);
+
+    isAuthenticating = false;
+
     if (resp.statusCode == 200) {
       final loginResponse = loginResponseFromJson(resp.body);
       user = loginResponse.usuarioDb;
@@ -34,11 +39,12 @@ class AuthService with ChangeNotifier {
 
       return true;
     } else {
-      return false;
+      final respBody = jsonDecode(resp.body);
+      return respBody['msg'];
     }
   }
 
-  Future<bool> login(String email, String password) async {
+  Future login(String email, String password) async {
     isAuthenticating = true;
     final data = {'email': email, 'password': password};
 
@@ -55,7 +61,8 @@ class AuthService with ChangeNotifier {
 
       return true;
     } else {
-      return false;
+      final respBody = jsonDecode(resp.body);
+      return respBody['msg'];
     }
   }
 

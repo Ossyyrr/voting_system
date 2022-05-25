@@ -19,13 +19,13 @@ class LoginPage extends StatelessWidget {
             ? null
             : () async {
                 //   final loginOk=   authService.login(emailCtrl.text.trim(), passCtrl.text.trim());
-                final loginOk = await authService.login('test5@hotmail.com', '123456');
+                final loginOk = await authService.login('test1@hotmail.com', '123456');
                 FocusScope.of(context).unfocus();
-                if (loginOk) {
+                if (loginOk == true) {
                   Navigator.pushReplacementNamed(context, 'home');
                 } else {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Login incorrecto"),
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(loginOk),
                   ));
                 }
               },
