@@ -24,20 +24,13 @@ class InitPage extends StatelessWidget {
             );
           }),
     );
-
-    // if (sharedPreferencesService.userName == '') {
-    // return const LoginPage();
-    // } else {
-    //   return const HomePage();
-    // }
   }
 
   Future checkLoginState(BuildContext context) async {
-    print('**************');
     final sharedPreferencesService = Provider.of<SharedPreferencesService>(context);
     final authService = Provider.of<AuthService>(context, listen: false);
     final isAuth = await authService.isLoggedIn(sharedPreferencesService.token);
-    print(isAuth);
+    print('isAuth: ' + isAuth.toString());
     if (isAuth) {
       Navigator.pushReplacementNamed(context, 'home');
     } else {

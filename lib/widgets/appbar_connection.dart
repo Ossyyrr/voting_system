@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:voting_system/services/auth_service.dart';
 import 'package:voting_system/services/shared_preferences_service.dart';
 import 'package:voting_system/services/socket_service.dart';
 
@@ -23,14 +24,24 @@ class AppBarConnection extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       foregroundColor: Colors.black87,
       // elevation: 1,
+      leading: IconButton(
+          onPressed: () {
+            final authService = Provider.of<AuthService>(context, listen: false);
+            authService.logout();
+            Navigator.pushNamedAndRemoveUntil(context, 'init', (route) => false);
+          },
+          icon: const Icon(
+            Icons.exit_to_app,
+            color: Colors.black87,
+          )),
       actions: [
         Padding(
           padding: const EdgeInsets.all(4.0),
           child: TextButton(
               onPressed: () => Navigator.pushNamed(context, 'login'),
-              child: Text(
-                sharedPreferencesService.userName,
-                style: const TextStyle(color: Colors.black87, fontSize: 14),
+              child: const Text(
+                'USERNAME',
+                style: TextStyle(color: Colors.black87, fontSize: 14),
               )),
         ),
         Container(

@@ -6,11 +6,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesService with ChangeNotifier {
   late SharedPreferences _prefs;
-  late String _userName;
+  // late String _userName;
   late String _token;
   late String _deviceId;
 
-  String get userName => _userName;
+  // String get userName => _userName;
   String get deviceId => _deviceId;
   String get token => _token;
 
@@ -23,17 +23,17 @@ class SharedPreferencesService with ChangeNotifier {
   }
 
   void initConfig() async {
-    _userName = _prefs.getString('userName') ?? '';
+    // _userName = _prefs.getString('userName') ?? '';
     _deviceId = _prefs.getString('deviceId') ?? '';
     _token = _prefs.getString('token') ?? '';
     _getDeviceId();
     notifyListeners();
-    print('USERNAME: ' + _userName);
+    //   print('USERNAME: ' + _userName);
     print('TOKEN: ' + _token);
   }
 
   Future<void> _saveUserName(String name) async {
-    _userName = name;
+    //  _userName = name;
     await _prefs.setString('userName', name);
     notifyListeners();
   }
