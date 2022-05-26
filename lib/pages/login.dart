@@ -18,7 +18,7 @@ class LoginPage extends StatelessWidget {
         onPressed: authService.isAuthenticating
             ? null
             : () async {
-                //   final loginOk=   authService.login(emailCtrl.text.trim(), passCtrl.text.trim());
+                //final loginOk = await authService.login(emailCtrl.text.trim(), passCtrl.text.trim());
                 final loginOk = await authService.login('test1@hotmail.com', '123456');
                 FocusScope.of(context).unfocus();
                 if (loginOk == true) {

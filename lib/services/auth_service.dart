@@ -8,7 +8,7 @@ import 'package:voting_system/models/login_response.dart';
 import 'package:voting_system/models/user_auth.dart';
 
 class AuthService with ChangeNotifier {
-  late UserAuth user;
+  late User user;
   bool _isAuthenticating = false;
   bool get isAuthenticating => _isAuthenticating;
   set isAuthenticating(bool value) {

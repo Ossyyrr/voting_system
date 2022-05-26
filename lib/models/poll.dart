@@ -1,5 +1,5 @@
 import 'package:voting_system/models/option.dart';
-import 'package:voting_system/models/user.dart';
+import 'package:voting_system/models/user_auth.dart';
 
 class Poll {
   String id;

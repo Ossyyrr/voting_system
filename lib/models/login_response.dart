@@ -16,18 +16,18 @@ class LoginResponse {
   });
 
   bool ok;
-  UserAuth usuarioDb;
+  User usuarioDb;
   String token;
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) => LoginResponse(
         ok: json["ok"],
-        usuarioDb: UserAuth.fromJson(json["usuario"]),
+        usuarioDb: User.fromMap(json["usuario"]),
         token: json["token"],
       );
 
   Map<String, dynamic> toJson() => {
         "ok": ok,
-        "usuario": usuarioDb.toJson(),
+        "usuario": usuarioDb.toMap(),
         "token": token,
       };
 }
