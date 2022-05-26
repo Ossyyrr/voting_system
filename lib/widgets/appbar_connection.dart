@@ -28,7 +28,7 @@ class AppBarConnection extends StatelessWidget implements PreferredSizeWidget {
           onPressed: () {
             final authService = Provider.of<AuthService>(context, listen: false);
             authService.logout();
-            Navigator.pushNamedAndRemoveUntil(context, 'init', (route) => false);
+            Navigator.pushNamedAndRemoveUntil(context, 'init', (route) => true);
           },
           icon: const Icon(
             Icons.exit_to_app,
