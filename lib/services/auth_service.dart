@@ -20,7 +20,6 @@ class AuthService with ChangeNotifier {
     isAuthenticating = true;
 
     final data = {'name': name, 'email': email, 'password': password};
-
     final uri = Uri.parse('${Enviroment.apiUrl}/login/new');
     final resp = await http.post(uri, body: jsonEncode(data), headers: {'Content-Type': 'application/json'});
 
@@ -28,15 +27,12 @@ class AuthService with ChangeNotifier {
     print(resp.body);
 
     isAuthenticating = false;
-
     if (resp.statusCode == 200) {
       final loginResponse = loginResponseFromJson(resp.body);
       user = loginResponse.usuarioDb;
-      print(resp.body);
-
       //  Guardar token
       await _saveToken(loginResponse.token);
-
+      notifyListeners();
       return true;
     } else {
       final respBody = jsonDecode(resp.body);
@@ -47,7 +43,6 @@ class AuthService with ChangeNotifier {
   Future login(String email, String password) async {
     isAuthenticating = true;
     final data = {'email': email, 'password': password};
-
     final uri = Uri.parse('${Enviroment.apiUrl}/login');
     final resp = await http.post(uri, body: jsonEncode(data), headers: {'Content-Type': 'application/json'});
     isAuthenticating = false;
@@ -55,10 +50,9 @@ class AuthService with ChangeNotifier {
       final loginResponse = loginResponseFromJson(resp.body);
       user = loginResponse.usuarioDb;
       print(resp.body);
-
       //  Guardar token
       await _saveToken(loginResponse.token);
-
+      notifyListeners();
       return true;
     } else {
       final respBody = jsonDecode(resp.body);
@@ -69,15 +63,13 @@ class AuthService with ChangeNotifier {
   Future<bool> isLoggedIn(String token) async {
     final uri = Uri.parse('${Enviroment.apiUrl}/login/renew');
     final resp = await http.get(uri, headers: {'Content-Type': 'application/json', 'x-token': token});
-
     print(resp.body);
-
     if (resp.statusCode == 200) {
       final loginResponse = loginResponseFromJson(resp.body);
       user = loginResponse.usuarioDb;
       //  Guardar nuevo token
       await _saveToken(loginResponse.token);
-
+      notifyListeners();
       return true;
     } else {
       logout();
