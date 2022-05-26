@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:voting_system/global/enviroments.dart';
 import 'package:voting_system/models/login_response.dart';
-import 'package:voting_system/models/user_auth.dart';
+import 'package:voting_system/models/user.dart';
 
 class AuthService with ChangeNotifier {
   late User user;
@@ -64,6 +64,7 @@ class AuthService with ChangeNotifier {
     final uri = Uri.parse('${Enviroment.apiUrl}/login/renew');
     final resp = await http.get(uri, headers: {'Content-Type': 'application/json', 'x-token': token});
     print(resp.body);
+
     if (resp.statusCode == 200) {
       final loginResponse = loginResponseFromJson(resp.body);
       user = loginResponse.usuarioDb;

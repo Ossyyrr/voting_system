@@ -30,6 +30,7 @@ class InitPage extends StatelessWidget {
     final sharedPreferencesService = Provider.of<SharedPreferencesService>(context);
     final authService = Provider.of<AuthService>(context, listen: false);
     final isAuth = await authService.isLoggedIn(sharedPreferencesService.token);
+
     print('isAuth: ' + isAuth.toString());
     if (isAuth) {
       Navigator.pushReplacementNamed(context, 'home');

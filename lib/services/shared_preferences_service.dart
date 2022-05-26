@@ -20,9 +20,11 @@ class SharedPreferencesService with ChangeNotifier {
   }
 
   void initConfig() async {
+    // await _prefs.remove('token');
     _deviceId = _prefs.getString('deviceId') ?? '';
     _getDeviceId();
     notifyListeners();
+    // await _prefs.remove('token');
     print('TOKEN: ' + token);
   }
 

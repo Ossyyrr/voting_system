@@ -22,16 +22,17 @@ class RegistrerPage extends StatelessWidget {
             ? null
             : () async {
                 //final loginOk = await authService.register(nameCtrl.text, emailCtrl.text.trim(), passCtrl.text.trim());
-                final loginOk = await authService.register('pepe', 'test1@hotmail.com', '123456');
+                final loginOk = await authService.register('pepe', 'test12@hotmail.com', '123456');
                 FocusScope.of(context).unfocus();
                 if (loginOk == true) {
                   sharedPreferencesService.userName = nameCtrl.text;
 
                   Navigator.pushReplacementNamed(context, 'home');
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(loginOk),
+                  ));
                 }
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text(loginOk),
-                ));
               },
         child: authService.isAuthenticating
             ? const CircularProgressIndicator(

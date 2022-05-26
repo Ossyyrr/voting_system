@@ -2,7 +2,7 @@
 
 import 'dart:convert';
 
-import 'package:voting_system/models/user_auth.dart';
+import 'package:voting_system/models/user.dart';
 
 LoginResponse loginResponseFromJson(String str) => LoginResponse.fromJson(json.decode(str));
 
