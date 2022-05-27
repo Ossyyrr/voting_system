@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:voting_system/models/poll.dart';
+import 'package:voting_system/services/auth_service.dart';
 import 'package:voting_system/services/shared_preferences_service.dart';
 import 'package:voting_system/services/socket_service.dart';
 import 'package:voting_system/widgets/appbar_connection.dart';
@@ -13,7 +14,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final socketService = Provider.of<SocketService>(context);
     final sharedPreferencesService = Provider.of<SharedPreferencesService>(context);
-
+    final authService = Provider.of<AuthService>(context);
+    socketService.initConfig(authService.user.uid);
     List<Poll> polls = socketService.polls;
 
     return Scaffold(
