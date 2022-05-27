@@ -80,6 +80,10 @@ class HomePage extends StatelessWidget {
               socketService.poll = poll;
               await Navigator.pushNamed(context, 'poll');
               socketService.emit('leave-poll', {'pollId': poll.id});
+
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                content: Text('Cambios guardados en db'),
+              ));
             },
           ),
           Row(

@@ -76,7 +76,13 @@ class PollPage extends StatelessWidget {
               option.votes.toString(),
               style: const TextStyle(fontSize: 20),
             ),
-            onTap: () => socketService.emit('vote-option', {'pollId': pollId, 'optionId': option.id}),
+            onTap: () {
+              socketService.emit('vote-option', {'pollId': pollId, 'optionId': option.id});
+
+              print('option.id *******');
+              print(option.id);
+              print(option);
+            },
           ),
           Container(
             color: Colors.red,
