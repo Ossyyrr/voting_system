@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:voting_system/models/poll.dart';
 import 'package:voting_system/services/auth_service.dart';
-import 'package:voting_system/services/shared_preferences_service.dart';
 import 'package:voting_system/services/socket_service.dart';
 import 'package:voting_system/widgets/appbar_connection.dart';
 import 'package:voting_system/widgets/dialog_platform.dart';
@@ -13,9 +12,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final socketService = Provider.of<SocketService>(context);
-    final sharedPreferencesService = Provider.of<SharedPreferencesService>(context);
     final authService = Provider.of<AuthService>(context);
     socketService.initConfig(authService.user.uid);
+
     List<Poll> polls = socketService.polls;
 
     return Scaffold(
@@ -23,7 +22,7 @@ class HomePage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         elevation: 1,
-        onPressed: () => addNewPoll(context, sharedPreferencesService.deviceId),
+        onPressed: () => addNewPoll(context, authService.user.uid),
       ),
       body: SafeArea(
         child: Center(
@@ -44,7 +43,7 @@ class HomePage extends StatelessWidget {
 
   Widget _pollTile(BuildContext context, Poll poll) {
     final socketService = Provider.of<SocketService>(context);
-    final sharedPreferencesService = Provider.of<SharedPreferencesService>(context);
+    final authService = Provider.of<AuthService>(context);
 
     return Dismissible(
       key: Key(poll.id),
@@ -69,7 +68,7 @@ class HomePage extends StatelessWidget {
               child: Text(poll.title.substring(0, 1)),
               backgroundColor: Colors.blue[100],
             ),
-            trailing: (sharedPreferencesService.deviceId == poll.creatorId)
+            trailing: (authService.user.uid == poll.creatorId)
                 ? const Text(
                     'Creator',
                     style: TextStyle(fontSize: 12),

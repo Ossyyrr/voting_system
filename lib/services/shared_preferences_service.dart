@@ -1,14 +1,12 @@
-import 'dart:io';
-
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// TODO Reorganizar esta clase
 class SharedPreferencesService with ChangeNotifier {
   late SharedPreferences _prefs;
-  late String _deviceId;
+  //late String _deviceId;
 
-  String get deviceId => _deviceId;
+  //String get deviceId => _deviceId;
   String get token => _prefs.getString('token') ?? '';
 
   set userName(String name) => _saveUserName(name);
@@ -21,8 +19,8 @@ class SharedPreferencesService with ChangeNotifier {
 
   void initConfig() async {
     // await _prefs.remove('token');
-    _deviceId = _prefs.getString('deviceId') ?? '';
-    _getDeviceId();
+    //  _deviceId = _prefs.getString('deviceId') ?? '';
+    // _getDeviceId();
     notifyListeners();
     // await _prefs.remove('token');
     print('TOKEN: ' + token);
@@ -38,13 +36,13 @@ class SharedPreferencesService with ChangeNotifier {
     notifyListeners();
   }
 
-  void _getDeviceId() async {
-    final deviceInfoPlugin = DeviceInfoPlugin();
-    final deviceInfo = await deviceInfoPlugin.deviceInfo;
-    final map = deviceInfo.toMap();
-    if (Platform.isIOS) _deviceId = map['identifierForVendor'];
-    if (Platform.isAndroid) _deviceId = map['androidId'];
-    await _prefs.setString('deviceId', _deviceId);
-    print('DEVICE_ID: ' + _deviceId);
-  }
+  // void _getDeviceId() async {
+  //   final deviceInfoPlugin = DeviceInfoPlugin();
+  //   final deviceInfo = await deviceInfoPlugin.deviceInfo;
+  //   final map = deviceInfo.toMap();
+  //   if (Platform.isIOS) _deviceId = map['identifierForVendor'];
+  //   if (Platform.isAndroid) _deviceId = map['androidId'];
+  //   await _prefs.setString('deviceId', _deviceId);
+  //   print('DEVICE_ID: ' + _deviceId);
+  // }
 }
