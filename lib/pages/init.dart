@@ -14,7 +14,7 @@ class InitPage extends StatelessWidget {
           builder: (context, snapshot) {
             return const Center(
               child: Text(
-                'Utilizamos servidores gratuitos, por favor, aguarde unos segundos...',
+                'Utilizamos servidores gratuitos, por favor, espere unos segundos...',
                 textAlign: TextAlign.center,
               ),
             );

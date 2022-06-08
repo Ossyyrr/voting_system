@@ -22,7 +22,7 @@ class RegistrerPage extends StatelessWidget {
             ? null
             : () async {
                 //final loginOk = await authService.register(nameCtrl.text, emailCtrl.text.trim(), passCtrl.text.trim());
-                final loginOk = await authService.register('pepe', 'test13@hotmail.com', '123456');
+                final loginOk = await authService.register('pepe', 'test2@hotmail.com', '123456');
                 FocusScope.of(context).unfocus();
                 if (loginOk == true) {
                   sharedPreferencesService.userName = nameCtrl.text;
