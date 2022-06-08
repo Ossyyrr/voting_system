@@ -81,7 +81,6 @@ class PollPage extends StatelessWidget {
 
               print('option.id *******');
               print(option.id);
-              print(option);
             },
           ),
           Container(

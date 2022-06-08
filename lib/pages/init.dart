@@ -13,22 +13,31 @@ class InitPage extends StatelessWidget {
           future: checkLoginState(context),
           builder: (context, snapshot) {
             return const Center(
-              child: Text('Cargando'),
+              child: Text(
+                'Utilizamos servidores gratuitos, por favor, aguarde unos segundos...',
+                textAlign: TextAlign.center,
+              ),
             );
           }),
     );
   }
 
   Future checkLoginState(BuildContext context) async {
-    final sharedPreferencesService = Provider.of<SharedPreferencesService>(context);
+    final sharedPreferencesService = Provider.of<SharedPreferencesService>(context, listen: false);
     final authService = Provider.of<AuthService>(context, listen: false);
-    final isAuth = await authService.isLoggedIn(sharedPreferencesService.token);
-
-    print('isAuth: ' + isAuth.toString());
-    if (isAuth) {
-      Navigator.pushReplacementNamed(context, 'home');
-    } else {
-      Navigator.pushReplacementNamed(context, 'login');
+    try {
+      final isAuth = await authService.isLoggedIn(sharedPreferencesService.token);
+      print('isAuth: ' + isAuth.toString());
+      if (isAuth) {
+        Navigator.pushReplacementNamed(context, 'home');
+      } else {
+        Navigator.pushReplacementNamed(context, 'login');
+      }
+    } catch (e) {
+      Future.delayed(const Duration(seconds: 2), () async {
+        print('2 seconds.');
+        await checkLoginState(context);
+      });
     }
   }
 }
